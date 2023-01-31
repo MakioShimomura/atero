@@ -1,24 +1,17 @@
-# README
+# SGキャンプ第3回 ザッハトルテ 後半アプリ開発
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 画像クイズアプリ
+加工された画像をクイズ形式で出題する
 
-Things you may want to cover:
+## 環境構築
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+# リポジトリからプロジェクトをクローン
+git clone https://github.com/SonicGardenCamp/quiz_app.git
+# プロジェクトに移動
+cd quiz_app
+# production のgemはインストールしないように設定
+bundle _2.3.14_ config set --local without 'production'
+# gemのインストール
+bundle _2.3.14_ install
+```
