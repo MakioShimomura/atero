@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_050116) do
   create_table "games", force: :cascade do |t|
     t.string "name", default: "名無しさん"
     t.integer "question_quantities", default: 4
-    t.integer "correct_question"
+    t.integer "correct_quantities"
     t.datetime "end_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
