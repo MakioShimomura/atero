@@ -7,11 +7,11 @@
 
 <%= form_with scope: :question, url: game_path(params[:id]), method: :patch do |f| %>
   <ul>
-  <% @answers.each do |answer| %>
+  <% @choices.each do |choice| %>
     <li>
       <label>
-        <%= f.radio_button :answer, answer[:is_correct] %>
-        <%= answer[:text] %>
+        <%= f.radio_button :choice, choice[:is_correct] %>
+        <%= choice[:text] %>
       </label>
     </li>
   <% end %>
