@@ -18,7 +18,11 @@ correct_answers = Answer.all()
 correct_answers.each_with_index do |correct_answer, i|
   question = correct_answer.questions.create!(text: "この画像はなんでしょう")
   filename = "question#{i + 1}.jpg"
-  question.image.attach(io: File.open(Rails.root.join("app/assets/images/question/#{filename}")), filename: filename)
+  image = Magick::ImageList.new("app/assets/images/question/#{filename}")
+  image = image.blur_image(50.0, 50.0)
+               .quantize(256, Magick::GRAYColorspace)
+  image.write("/tmp/#{filename}")
+  question.image.attach(io: File.open("/tmp/#{filename}"), filename: filename)
 end
 
 # 誤答のanswer(選択肢)を作成
