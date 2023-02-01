@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_065232) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_145813) do
   create_table "answers", force: :cascade do |t|
     t.string "text", null: false
     t.datetime "created_at", null: false
@@ -26,10 +26,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_065232) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.string "name"
+    t.string "name", default: "名無しさん"
     t.integer "question_quantities"
     t.integer "answer_quantities"
-    t.datetime "start_time"
     t.datetime "finish_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
