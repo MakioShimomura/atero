@@ -10,6 +10,9 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+    @games = Game.all.where.not(end_at: nil)
+    #@required_time = @games.end_at - @games.created_at
+    
   end
   
   def create

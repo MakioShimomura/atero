@@ -4,9 +4,9 @@ Game.create!(name: "ザッハトルテ",
               correct_quantities: 4,
               end_at: Time.zone.now + 1.minutes)
 # 回答中のユーザー
-#Game.create!(name: "回答途中",
-#              question_quantities: 5,
-#              correct_quantities: 1)
+Game.create!(name: "回答途中",
+              question_quantities: 5,
+              correct_quantities: 1)
 
 #回答済のユーザー19人（ランキング用）
 19.times do |n|
