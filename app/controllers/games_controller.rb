@@ -6,6 +6,7 @@ class GamesController < ApplicationController
     wrong_answers = Answer.order("RANDOM()").limit(3) 
     @answers = wrong_answers.map { |answer| {text: answer.text, is_correct: false} }
     @answers << { text: correct_answer.text, is_correct: true}
+    @answers.shuffle!
   end
 
   def new
