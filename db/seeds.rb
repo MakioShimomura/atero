@@ -10,7 +10,7 @@ Game.create!(name: "回答途中",
 
 
 # 正答からanswer(選択肢)を作成
-correct_answers_texts = ["猫", "犬", "パンダ"]
+correct_answers_texts = ["猫", "犬", "パンダ", "キリン", "レッサーパンダ"]
 correct_answers_texts.each { |correct_answer_text| Answer.create!(text: correct_answer_text) }
 
 # 正答のモデルからquestionを作成
