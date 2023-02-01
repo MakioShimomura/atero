@@ -11,17 +11,21 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+    @games = Game.all.where.not(end_at: nil)
+    #@required_time = @games.end_at - @games.created_at
+    
   end
   
   def create
     game = Game.new(game_params)
-    game.question_quantities = 4
     
     if game.save
       reset_session
       session[:game_id] = game.id
       session[:question_num] = 1
-      redirect_to edit_game_path(session[:game_id])
+      redirect_to edit_game_path(game.id)
+    else
+      render 'new'
     end
   end
   

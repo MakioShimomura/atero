@@ -1,13 +1,24 @@
 # 回答済のユーザー
 Game.create!(name: "ザッハトルテ",
               question_quantities: 5,
-              answer_quantities: 4,
-              finish_time: Time.zone.now + 1.minutes)
+              correct_quantities: 4,
+              end_at: Time.zone.now + 1.minutes)
 # 回答中のユーザー
 Game.create!(name: "回答途中",
               question_quantities: 5,
-              answer_quantities: 1)
+              correct_quantities: 1)
 
+#回答済のユーザー19人（ランキング用）
+19.times do |n|
+  name = Faker::Name.name
+  finish_time =Time.zone.now + n.minutes
+  question_quantities = 5
+  answer_quantities = 3
+  Game.create!(name: name,
+              question_quantities: question_quantities,
+              correct_quantities: answer_quantities,
+              end_at: finish_time)
+end
 
 # 正答からanswer(選択肢)を作成
 correct_answers_texts = ["猫", "犬", "パンダ", "キリン", "レッサーパンダ"]
