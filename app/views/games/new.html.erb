@@ -1,5 +1,5 @@
 <h1>ザッハトルテクイズへようこそ！</h1>
-    <%= form_with(model: @result) do |f| %>
+    <%= form_with(model: @game) do |f| %>
       <%= f.label :ニックネーム %>
       <%= f.text_field :name %>
       <%= f.submit "ゲームを開始する" %>

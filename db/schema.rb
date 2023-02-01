@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_145813) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_01_012453) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,21 +45,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_145813) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "questions", force: :cascade do |t|
-    t.string "text", null: false
-    t.integer "answer_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["answer_id"], name: "index_questions_on_answer_id"
-  end
-
-  create_table "results", force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
     t.string "name", default: "名無しさん"
     t.integer "question_quantities"
     t.integer "answer_quantities"
     t.datetime "finish_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "text", null: false
+    t.integer "answer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_questions_on_answer_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

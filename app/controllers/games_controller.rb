@@ -1,4 +1,4 @@
-class ResultsController < ApplicationController
+class GamesController < ApplicationController
   
   def edit
     @question = Question.order("RANDOM()").limit(1)[0]
@@ -9,23 +9,22 @@ class ResultsController < ApplicationController
   end
 
   def new
-    @result = Result.new
+    @game = Game.new
   end
   
   def create
-    result = Result.new(result_params)
+    game = Game.new(game_params)
+    game.question_quantities = 4
     
-    result.question_quantities = 4
-    
-    if result.save
+    if game.save
       reset_session
-      session[:result_id] = result.id
-      redirect_to edit_result_pass(session[:result_id])
+      session[:game_id] = game.id
+      redirect_to edit_game_pass(session[:game_id])
     end
   end
   
   private
-    def result_params
-      params.require(:result).permit(:name)
+    def game_params
+      params.require(:game).permit(:name)
     end
 end

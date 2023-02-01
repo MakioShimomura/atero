@@ -1,10 +1,10 @@
 # 回答済のユーザー
-Result.create!(name: "ザッハトルテ",
+Game.create!(name: "ザッハトルテ",
               question_quantities: 5,
               answer_quantities: 4,
               finish_time: Time.zone.now + 1.minutes)
 # 回答中のユーザー
-Result.create!(name: "回答途中",
+Game.create!(name: "回答途中",
               question_quantities: 5,
               answer_quantities: 1)
 
