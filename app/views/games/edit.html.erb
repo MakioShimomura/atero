@@ -1,0 +1,20 @@
+<h1>回答画面</h1>
+
+<% if @question.image.attached? %>
+  <%= image_tag @question.image.variant(:display) %>
+<% end %>
+
+<%= form_with scope: :question, url: game_path(params[:id]), method: :patch do |f| %>
+  <%= f.hidden_field :number, value: session[:question_num] %>
+  <ul>
+  <% @answers.each do |answer| %>
+    <li>
+      <label>
+        <%= f.radio_button :select, answer[:is_correct] %>
+        <%= answer[:text] %>
+      </label>
+    </li>
+  <% end %>
+  </ul>
+  <%= f.submit "送信" %>
+<% end %>

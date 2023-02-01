@@ -3,6 +3,7 @@
   <head>
     <title>QuizApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8"
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,5 +13,6 @@
 
   <body>
     <%= yield %>
+    <%= debug(params) if Rails.env.development? %>
   </body>
 </html>
