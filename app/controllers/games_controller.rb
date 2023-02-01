@@ -14,13 +14,14 @@ class GamesController < ApplicationController
   
   def create
     game = Game.new(game_params)
-    game.question_quantities = 4
     
     if game.save
       reset_session
       session[:game_id] = game.id
       session[:question_num] = 1
       redirect_to edit_game_path(session[:game_id])
+    else
+      render 'new'
     end
   end
   
