@@ -19,7 +19,7 @@ class GamesController < ApplicationController
       reset_session
       session[:game_id] = game.id
       session[:question_num] = 1
-      redirect_to edit_game_path(session[:game_id])
+      redirect_to edit_game_path(game.id)
     else
       render 'new'
     end
