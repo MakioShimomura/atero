@@ -19,7 +19,8 @@ class GamesController < ApplicationController
     if game.save
       reset_session
       session[:game_id] = game.id
-      redirect_to edit_game_pass(session[:game_id])
+      session[:question_num] = 1
+      redirect_to edit_game_path(session[:game_id])
     end
   end
   
