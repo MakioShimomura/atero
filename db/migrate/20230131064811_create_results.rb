@@ -1,7 +1,7 @@
 class CreateResults < ActiveRecord::Migration[7.0]
   def change
     create_table :results do |t|
-      t.string :name, defalut: "名無しさん"
+      t.string :name
       t.integer :question_quantities
       t.integer :answer_quantities
       t.datetime :start_time
