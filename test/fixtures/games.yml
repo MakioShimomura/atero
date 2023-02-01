@@ -4,12 +4,10 @@ one:
   name: MyString
   question_quantities: 1
   answer_quantities: 1
-  start_time: 2023-01-31 06:48:11
   finish_time: 2023-01-31 06:48:11
 
 two:
   name: MyString
   question_quantities: 1
   answer_quantities: 1
-  start_time: 2023-01-31 06:48:11
   finish_time: 2023-01-31 06:48:11
