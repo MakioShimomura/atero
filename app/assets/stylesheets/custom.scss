@@ -49,3 +49,16 @@
     margin-bottom: 56px;
   }
 }
+
+.start-game {
+  margin: 80px 0 80px!important;
+}
+
+
+// materialize override
+.btn,
+.btn-large {
+  &.full {
+    width: 100%;
+  }
+}
