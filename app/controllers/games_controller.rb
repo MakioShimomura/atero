@@ -25,6 +25,11 @@ class GamesController < ApplicationController
     end
   end
   
+  def show
+    @game = Game.find_by( id: params[:id] )
+    reset_session
+  end
+  
   private
     def game_params
       params.require(:game).permit(:name)
