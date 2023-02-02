@@ -1,4 +1,5 @@
 class Game < ApplicationRecord
+  validates :name, presence: true, length: { maximum: 20 }
   default_scope -> {order(correct_quantities: :desc)}
 
   def correct_answers
