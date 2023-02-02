@@ -19,7 +19,5 @@ class Game < ApplicationRecord
   
   def answer_time
     "#{(end_at - created_at).round}"
-    
   end
-
 end
