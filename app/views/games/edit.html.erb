@@ -1,20 +1,23 @@
-<h1>回答画面</h1>
-<h2>問題<%= session[:question_num] %></h2>
-
-<% if @question.image.attached? %>
-  <%= image_tag @question.image.variant(:display) %>
-<% end %>
-
-<%= form_with scope: :question, url: game_path(params[:id]), method: :patch do |f| %>
-  <ul>
-  <% @choices.each do |choice| %>
-    <li>
-      <label>
-        <%= f.radio_button :choice, choice[:is_correct] %>
-        <%= choice[:text] %>
-      </label>
-    </li>
-  <% end %>
-  </ul>
-  <%= f.submit "送信" %>
-<% end %>
+<div class="row" style="margin-top: 50px">
+  <div class="col s12 m8 l6 offset-m2 offset-l3">
+    <div class="z-depth-1">
+    <% if @question.image.attached? %>
+      <%= image_tag @question.image.variant(:display), class: "question-image" %>
+    <% end %>    
+    </div>
+    <p>Q.<%= session[:question_num] %></p>
+    <div>
+      <%= form_with scope: :question, url: game_path(params[:id]), method: :patch do |f| %>
+        <% @choices.each do |choice| %>
+          <div>
+            <label>
+              <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
+              <span><%= choice[:text] %></span>
+            </label>
+          </div>
+        <% end %>
+        <%= f.submit "送信", class: "waves-effect waves-light btn" %>
+      <% end %>
+    </div>
+  </div>
+</div>
