@@ -1,4 +1,9 @@
 class GamesController < ApplicationController
+  
+  def show
+    @game = Game.find_by( id: params[:id] )
+    reset_session
+  end
 
   def new
     @game = Game.new
@@ -11,7 +16,6 @@ class GamesController < ApplicationController
 
     if game.save
       reset_session
-      session[:game_id] = game.id
       session[:question_num] = 1
       redirect_to edit_game_path(game.id)
     else
@@ -47,7 +51,7 @@ class GamesController < ApplicationController
       redirect_to edit_game_path
     end
   end
-
+  
   private
     def game_params
       params.require(:game).permit(:name)

@@ -1,7 +1,12 @@
 class Game < ApplicationRecord
   default_scope -> {order(correct_quantities: :desc)}
+
+  def correct_answers
+    "#{correct_quantities}/#{question_quantities}"
+  end
   
-  #def required_time
-  #  @required_time = @game.end_at-@game.created_at
-  #end
+  def percentage_correct_answers
+    calc_result = correct_quantities.to_f / question_quantities.to_f * 100
+    calc_result.to_i
+  end
 end
