@@ -38,7 +38,7 @@ end
 end
 
 # 正答からchoice(選択肢)を作成
-correct_choices_texts = ["猫", "犬", "パンダ", "キリン", "レッサーパンダ"]
+correct_choices_texts = ["ネコ","イヌ","パンダ","キリン","レッサーパンダ","ネコ","マーラ","オカピー"]
 correct_choices_texts.each { |correct_choice_text| Choice.create!(text: correct_choice_text) }
 
 # 正答のモデルからquestionを作成
