@@ -9,7 +9,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   #   assert true
   # end
   
- test "Smoothly access to Homepage" do
+ test "ホームページへアクセス" do
    get root_path
    assert_response :success
    assert_template 'games/new'
@@ -27,4 +27,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     @game.name = "a"* 21
     assert_not @game.valid?
   end
+  
+  # test "ランキングがきちんとできているか"
+  # get root_path
 end
