@@ -7,13 +7,30 @@ Game.create!(name: "ザッハトルテ",
 Game.create!(name: "回答途中",
               question_quantities: 5,
               correct_quantities: 1)
+              
+Game.create!(name: "はなまる満点",
+              question_quantities: 4,
+              correct_quantities: 4,
+              end_at: Time.zone.now + 1.minutes)
 
-#回答済のユーザー19人（ランキング用）
-19.times do |n|
-  name = Faker::Name.name
+#回答済、正答率が60%のユーザー9人（ランキング用）
+9.times do |n|
+  name = "60%#{n}"
   finish_time =Time.zone.now + n.minutes
   question_quantities = 5
   correct_quantities = 3
+  Game.create!(name: name,
+              question_quantities: question_quantities,
+              correct_quantities: correct_quantities,
+              end_at: finish_time)
+end
+
+#回答済、正答率が40%のユーザー9人（ランキング用）
+9.times do |n|
+  name = "40%#{n}"
+  finish_time =Time.zone.now + n.minutes
+  question_quantities = 5
+  correct_quantities = 2
   Game.create!(name: name,
               question_quantities: question_quantities,
               correct_quantities: correct_quantities,

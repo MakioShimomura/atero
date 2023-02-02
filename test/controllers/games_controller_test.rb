@@ -1,11 +1,12 @@
 require "test_helper"
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    # 失敗用のユーザー
+    @game = Game.new
+  end
   
- test "Smoothly access to Homepage" do
+ test "ホームページへアクセス" do
    get root_path
    assert_response :success
    assert_template 'games/new'
@@ -17,5 +18,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
       post games_path, params: { game: {name: "hoge"} }
     end
     assert_response :redirect
+  end
+  
+  test "ゲームユーザーの名前は20文字以内" do
+    @game.name = "a"* 21
+    assert_not @game.valid?
   end
 end

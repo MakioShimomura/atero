@@ -19,10 +19,10 @@
   <tbody>
     <% @games.each do |game| %>
     <tr>
-      <td><%= "#{game.name}" %></td>
-      <td><%= game.correct_quantities %></td>
-      <td><%= "#{game.end_at - game.created_at}" %>seconds</td>
+      <td><%= game.name %></td>
+      <td><%= game.percentage_correct_answers %>%</td>
+      <td><%= pluralize(game.answer_time,"second") %></td>
     </tr>
     <% end %> 
   </tbody>
-</table>　
+</table>
