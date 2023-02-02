@@ -1,6 +1,17 @@
 <h1>ザッハトルテクイズへようこそ！</h1>
-    <%= form_with(model: @game) do |f| %>
-      <%= f.label :ニックネーム %>
-      <%= f.text_field :name %>
-      <%= f.submit "ゲームを開始する" %>
-    <% end %>
+<%= form_with(model: @game) do |f| %>
+  <%= f.label :ニックネーム %>
+  <%= f.text_field :name %>
+  <%= f.submit "ゲームを開始する" %>
+<% end %>
+<h3>ランキング</h3>
+<ol>
+  <% @games.each do |game| %>
+    <li>
+      <%= "#{game.name}" %>
+      <%= game.correct_quantities  %>
+       <%= "#{game.end_at - game.created_at}" %>seconds
+    </li>
+  <% end %>
+   
+</ul>

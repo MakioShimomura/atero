@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  default_scope -> {order(correct_quantities: :desc)}
+
   def correct_answers
     "#{correct_quantities}/#{question_quantities}"
   end
