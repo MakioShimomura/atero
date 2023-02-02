@@ -1,12 +1,6 @@
 class Game < ApplicationRecord
-
-  def self.sort_by_answer_time
-    scope :order_by_answer_time, -> { select('*, end_at - created_at as answer_time').order(answer_time: :asc) }
-  end
-  
-  def self.sort_by_correct_answer_rate
-    scope :order_by_correct_answer_rate, -> { select('*, correct_answer - question_quantities as correct_answer_rate').order(correct_answer_rate: :desc) }
-  end
+  scope :order_by_answer_time, -> { select('*, end_at - created_at as answer_time').order(answer_time: :asc ) }
+  scope :order_by_correct_answer_rate, -> { select('*, correct_quantities / question_quantities as correct_answer_rate').order(correct_answer_rate: :desc) }
   
   def correct_answers
     "#{correct_quantities}/#{question_quantities}"

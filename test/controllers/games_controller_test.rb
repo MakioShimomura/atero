@@ -1,6 +1,10 @@
 require "test_helper"
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
+  def setup
+    # 失敗用のユーザー
+    @game = Game.new
+  end
   # test "the truth" do
   #   assert true
   # end
@@ -20,6 +24,5 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   end
   
   test "ランキングがきちんとできているか"
-  get root_path
-  
+    get root_path
 end

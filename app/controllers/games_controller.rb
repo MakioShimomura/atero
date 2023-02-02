@@ -7,9 +7,9 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    @games = Game.all.where.not(end_at: nil)
-    @games.sort_by_answer_time
-    @games.sort_by_correct_answer_rate
+    @games = Game.where.not(end_at: nil)
+                 .order_by_answer_time
+                 .order_by_correct_answer_rate
   end
 
   def create
