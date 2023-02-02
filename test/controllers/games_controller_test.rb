@@ -1,6 +1,10 @@
 require "test_helper"
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
+  def setup
+    # 失敗用のユーザー
+    @game = Game.new
+  end
   # test "the truth" do
   #   assert true
   # end
@@ -19,7 +23,11 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
   
-  test "ランキングがきちんとできているか"
-  get root_path
+  test "ゲームユーザーの名前は20文字以内" do
+    @game.name = "a"* 21
+    assert_not @game.valid?
+  end
   
+  # test "ランキングがきちんとできているか"
+  # get root_path
 end
