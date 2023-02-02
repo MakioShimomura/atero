@@ -4,7 +4,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rails",           "7.0.4"
 gem "faker",           "2.21.0"
 gem "image_processing", "1.12.2"
-gem "bootstrap-sass",  "3.4.1"
+gem 'materialize-sass', '~> 1.0.0'
+gem 'material_icons' 
+# gem "bootstrap-sass",  "3.4.1"
 gem "sassc-rails",     "2.1.2"
 gem "sprockets-rails", "3.4.2"
 gem "importmap-rails", "1.1.0"
