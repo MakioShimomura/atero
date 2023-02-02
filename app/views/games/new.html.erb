@@ -9,9 +9,8 @@
   <% @games.each do |game| %>
     <li>
       <%= "#{game.name}" %>
-      <%= game.correct_quantities  %>
-       <%= "#{game.end_at - game.created_at}" %>seconds
+      <%= "#{game.percentage_correct_answers}%" %>
+      <%= "#{pluralize(game.answer_time,"second")}" %>
     </li>
   <% end %>
-   
-</ul>
+</ol>
