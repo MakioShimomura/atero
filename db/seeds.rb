@@ -8,12 +8,24 @@ Game.create!(name: "回答途中",
               question_quantities: 5,
               correct_quantities: 1)
 
-#回答済のユーザー19人（ランキング用）
-19.times do |n|
+#回答済、正答率が60%のユーザー9人（ランキング用）
+9.times do |n|
   name = Faker::Name.name
   finish_time =Time.zone.now + n.minutes
   question_quantities = 5
   correct_quantities = 3
+  Game.create!(name: name,
+              question_quantities: question_quantities,
+              correct_quantities: correct_quantities,
+              end_at: finish_time)
+end
+
+#回答済、正答率が40%のユーザー9人（ランキング用）
+9.times do |n|
+  name = Faker::Name.name
+  finish_time =Time.zone.now + n.minutes
+  question_quantities = 5
+  correct_quantities = 2
   Game.create!(name: name,
               question_quantities: question_quantities,
               correct_quantities: correct_quantities,
