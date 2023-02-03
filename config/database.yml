@@ -6,16 +6,16 @@ default: &default
 
 development:
   <<: *default
-  # database: quiz_development
+  database: quiz_development
   username: postgres
-  password: password
+  password: postgres
   host: localhost
 
 test:
   <<: *default
-  # database: quiz_development
+  database: quiz_test
   username: postgres
-  password: password
+  password: postgres
   host: localhost
 
 production:
