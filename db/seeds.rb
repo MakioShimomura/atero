@@ -53,5 +53,8 @@ correct_choices.each_with_index do |correct_choice, i|
   question.image.attach(io: File.open("/tmp/#{filename}"), filename: filename)
 end
 
-# 誤答のchoice(選択肢)を作成
-200.times {|i| Choice.create!(text: "誤答#{i}") }
+# choice（animal名）作成
+99.times do |n|
+  text  = Faker::Creature::Animal.name
+  Choice.create!(text:  text)
+end
