@@ -11,7 +11,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    @games = Game.sorted.all()
+    @games = Game.sorted
   end
 
   def create
