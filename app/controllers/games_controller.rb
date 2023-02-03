@@ -1,8 +1,12 @@
 class GamesController < ApplicationController
-  
+
   def show
     @game = Game.find_by( id: params[:id] )
-    reset_session
+    if @game
+      reset_session
+    else
+      redirect_to root_path
+    end
   end
 
   def new
@@ -41,7 +45,7 @@ class GamesController < ApplicationController
     end
 
     # 最終問題判定
-    if session[:question_num] >= game.question_quantities
+    if session[:question_num] == game.question_quantities
       game.end_at = Time.now
       game.save
       redirect_to game_path(game)
@@ -51,7 +55,7 @@ class GamesController < ApplicationController
       redirect_to edit_game_path
     end
   end
-  
+
   private
     def game_params
       params.require(:game).permit(:name)
