@@ -5,7 +5,7 @@
 
 ## 環境構築
 
-```
+```sh
 # リポジトリからプロジェクトをクローン
 git clone https://github.com/SonicGardenCamp/quiz_app.git
 
