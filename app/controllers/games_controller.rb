@@ -14,9 +14,7 @@ class GamesController < ApplicationController
   def new
     @game = Game.new
     @game.name = cookies[:game_name] if cookies[:game_name]
-    @games = Game.where.not(end_at: nil)
-                 .order_by_answer_time
-                 .order_by_correct_answer_rate
+    @games = Game.sorted
   end
 
   def create

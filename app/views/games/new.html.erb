@@ -17,14 +17,16 @@
 <table class="striped">
   <thead>
     <tr>
-      <th>Nickname</th>
-      <th>Rate</th>
-      <th>Time</th>
+      <th>順位</th>
+      <th>ニックネーム</th>
+      <th>正答率</th>
+      <th>タイム</th>
     </tr>
   </thead>
   <tbody>
     <% @games.each do |game| %>
     <tr>
+      <td>1</td>
       <td><%= game.name %></td>
       <td><%= game.percentage_correct_answers %>%</td>
       <td><%= pluralize(game.answer_time,"second") %></td>
