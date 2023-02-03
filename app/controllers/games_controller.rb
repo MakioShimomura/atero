@@ -13,7 +13,8 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    @games = Game.sorted.all()
+    @game.name = cookies[:game_name] if cookies[:game_name]
+    @games = Game.sorted
   end
 
   def create
@@ -21,6 +22,7 @@ class GamesController < ApplicationController
 
     if game.save
       reset_session
+      cookies.permanent[:game_name] = game.name
       session[:game_id] = game.id
       session[:question_num] = 1
       redirect_to edit_game_path(game.id)
