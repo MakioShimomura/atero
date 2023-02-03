@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_02_021531) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_02_070737) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_021531) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.string "name", default: "名無しさん"
+    t.string "name", default: "名無し"
     t.integer "question_quantities", default: 4
     t.integer "correct_quantities", default: 0
     t.datetime "end_at"

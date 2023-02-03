@@ -1,15 +1,15 @@
 require "test_helper"
 
 class GamesControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
 
   def setup
-    @game = Game.create
+    # 失敗用のユーザー
+    @game = Game.new
+
+    @create_game = Game.create
 
     # no_gameを定義
-    @no_game = @game.id + 1
+    @no_game = @create_game.id + 1
     # 存在しないidになるまでインクリメント
     while Game.exists?(@no_game) do
       @no_game += 1
@@ -21,10 +21,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
-  test "Smoothly access to Homepage" do
-   get root_path
-   assert_response :success
-   assert_template 'games/new'
+  test "ホームページへアクセス" do
+    get root_path
+    assert_response :success
+    assert_template 'games/new'
   end
 
   test "ゲームユーザー登録" do
@@ -33,5 +33,10 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
       post games_path, params: { game: {name: "hoge"} }
     end
     assert_response :redirect
+  end
+
+  test "ゲームユーザーの名前は20文字以内" do
+    @game.name = "a"* 21
+    assert_not @game.valid?
   end
 end

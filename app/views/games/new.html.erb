@@ -1,17 +1,30 @@
-<h1>ザッハトルテクイズへようこそ！</h1>
-<%= form_with(model: @game) do |f| %>
-  <%= f.label :ニックネーム %>
-  <%= f.text_field :name %>
-  <%= f.submit "ゲームを開始する" %>
-<% end %>
-<h3>ランキング</h3>
-<ol>
-  <% @games.each do |game| %>
-    <li>
-      <%= "#{game.name}" %>
-      <%= game.correct_quantities  %>
-       <%= "#{game.end_at - game.created_at}" %>seconds
-    </li>
+<div class="row start-game">
+  <%= form_with(model: @game, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
+    <div class="mb-0">
+      <%= f.label :ニックネーム %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="center-align">
+      <button type='submit' class="waves-effect waves-light btn-large full">ゲーム開始</button>
+    </div>
   <% end %>
-
-</ul>
+</div>
+<h2>Ranking</h2>
+<table class="striped">
+  <thead>
+    <tr>
+      <th>Nickname</th>
+      <th>Rate</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @games.each do |game| %>
+    <tr>
+      <td><%= game.name %></td>
+      <td><%= game.percentage_correct_answers %>%</td>
+      <td><%= pluralize(game.answer_time,"second") %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
