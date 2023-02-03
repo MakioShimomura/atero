@@ -1,8 +1,14 @@
 class Game < ApplicationRecord
   validates :name, presence: true, length: { maximum: 20 }
-  scope :order_by_answer_time, -> { select('*, end_at - created_at as answer_time').order(answer_time: :asc) }
-  scope :order_by_correct_answer_rate, -> { select('*, correct_quantities / question_quantities as correct_answer_rate').order(correct_answer_rate: :desc) }
-
+  
+  scope :sorted, -> {
+    select("*,
+            correct_quantities * 100 / question_quantities as correct_rate,
+            strftime('%s', end_at) - strftime('%s', created_at) as answer_time")
+          .where.not(end_at: nil)
+          .order(correct_rate: :desc, answer_time: :asc)
+  }
+  
   def correct_answers
     "#{correct_quantities}/#{question_quantities}"
   end
