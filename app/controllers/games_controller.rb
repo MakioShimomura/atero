@@ -13,6 +13,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
+    @game.name = cookies[:game_name] if cookies[:game_name]
     @games = Game.where.not(end_at: nil)
                  .order_by_answer_time
                  .order_by_correct_answer_rate
@@ -23,6 +24,7 @@ class GamesController < ApplicationController
 
     if game.save
       reset_session
+      cookies.permanent[:game_name] = game.name
       session[:game_id] = game.id
       session[:question_num] = 1
       redirect_to edit_game_path(game.id)

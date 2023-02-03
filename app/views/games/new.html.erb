@@ -2,7 +2,11 @@
   <%= form_with(model: @game, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
     <div class="mb-0">
       <%= f.label :ニックネーム %>
-      <%= f.text_field :name %>
+      <% if @game.name %>
+         <%= f.text_field :name, placeholder: @game.name %>
+      <% else %>
+        <%= f.text_field :name %>
+      <% end %>
     </div>
     <div class="center-align">
       <button type='submit' class="waves-effect waves-light btn-large full">ゲーム開始</button>
