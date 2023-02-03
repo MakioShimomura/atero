@@ -320,7 +320,7 @@ DEPENDENCIES
   sassc-rails (= 2.1.2)
   selenium-webdriver (= 4.2.0)
   sprockets-rails (= 3.4.2)
-  sqlite3 (= 1.4.2)
+  sqlite3 (~> 1.0)
   stimulus-rails (= 1.0.4)
   turbo-rails (= 1.1.1)
   tzinfo-data

@@ -18,7 +18,7 @@ gem "bootsnap",        "1.12.0", require: false
 gem "rmagick",         "5.1.0"
 
 group :development, :test do
-  gem "sqlite3", "1.4.2"
+  gem "sqlite3", "~>1.0"
   gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]
 end
 
