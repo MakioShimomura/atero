@@ -4,11 +4,11 @@ class Game < ApplicationRecord
   scope :sorted, -> {
     select("*,
             correct_quantities * 100 / question_quantities as correct_rate,
-            strftime('%s', end_at) - strftime('%s', created_at) as answer_time")
+            end_at - created_at as answer_time,
+            RANK() OVER(ORDER BY correct_quantities * 100 / question_quantities DESC, end_at - created_at ASC) as rank")
           .where.not(end_at: nil)
-          .order(correct_rate: :desc, answer_time: :asc)
   }
-  
+
   def correct_answers
     "#{correct_quantities}/#{question_quantities}"
   end
