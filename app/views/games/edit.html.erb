@@ -4,7 +4,9 @@
     <div class="z-depth-1">
     <% if @question.images.attached? %>
       <% @question.images.each_with_index do |image, i| %>
-        <%= image_tag image.variant(:display), class: "question-image #{i == 0 ? 'active' : ''}" %>
+        <%= image_tag image.variant(:display),
+                      id: "question-image-#{i}",
+                      class: "question-image #{i == 0 ? 'active' : ''}" %>
       <% end %>
     <% end %>  
     </div>
