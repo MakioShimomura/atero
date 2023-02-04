@@ -1,5 +1,6 @@
 <div class="row" style="margin-top: 50px">
-  <div class="col s12 m8 l6 offset-m2 offset-l3">
+  <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
+    <div id="judgment" class="question-judgment"></div>
     <div class="z-depth-1">
     <% if @question.image.attached? %>
       <%= image_tag @question.image.variant(:display), class: "question-image" %>
