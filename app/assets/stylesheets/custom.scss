@@ -1,33 +1,6 @@
+// === utility ===
 .bold {
   font-weight: bold;
-}
-
-.question-image {
-  width: 100%;
-  height: 350px;
-  display: none;
-  &.active {
-    display: block;
-  }
-}
-
-.result {
-  &-card {
-    margin-top: 120px;
-    padding: 30px 0.75rem 30px!important;
-    border-radius: 10px;
-  }
-  &-text {
-    font-weight: bold;
-    font-size: 25px;
-  }
-}
-
-.debug_dump {
-  clear: both;
-  float: left;
-  width: 100%;
-  margin-top: 45px;
 }
 
 .mb- {
@@ -54,15 +27,72 @@
   }
 }
 
-.start-game {
-  margin: 80px 0 80px!important;
-}
-
-
-// materialize override
+// === materialize override ===
 .btn,
 .btn-large {
   &.full {
     width: 100%;
   }
+}
+
+// === component ===
+.logo {
+  margin-top: 30px;
+  margin-bottom: 40px;
+  width: 200px;
+  img {
+    width: 100%;
+  }
+}
+
+.start-game {
+  margin: 0 0 80px!important;
+}
+
+.question {
+  &-container {
+    position: relative;
+  }
+  &-judgment {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    z-index: 9999;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 370px;
+    &.correct {
+      background: image-url('icon/correct.png') center / contain no-repeat ;
+    }
+    &.wrong {
+      background: image-url('icon/wrong.png') center / contain no-repeat ;
+    }
+  }
+  &-image {
+    width: 100%;
+    height: 350px;
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+}
+
+.result {
+  &-card {
+    margin-top: 120px;
+    padding: 30px 0.75rem 30px!important;
+    border-radius: 10px;
+  }
+  &-text {
+    font-weight: bold;
+    font-size: 25px;
+  }
+}
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
 }
