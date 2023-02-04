@@ -3,8 +3,7 @@ class GamesController < ApplicationController
   before_action :is_correct_game_id, only: :edit
   
   def show
-    @game = Game.find_by( id: params[:id] )
-    if @game
+    if @game = Game.find_by( id: params[:id] )
       reset_session
     else
       redirect_to root_path
@@ -42,13 +41,8 @@ class GamesController < ApplicationController
 
   def update
     game = Game.find(params[:id])
+    game.correct_quantities += 1 if params[:question][:choice] == "true"
 
-    # 正誤判定
-    if params[:question][:choice] == "true"
-      game.correct_quantities += 1
-    end
-
-    # 最終問題判定
     if session[:question_num] == game.question_quantities
       game.end_at = Time.now
       game.save
