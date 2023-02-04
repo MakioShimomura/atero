@@ -2,9 +2,13 @@
   <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
     <div id="judgment" class="question-judgment"></div>
     <div class="z-depth-1">
-    <% if @question.image.attached? %>
-      <%= image_tag @question.image.variant(:display), class: "question-image" %>
-    <% end %>    
+    <% if @question.images.attached? %>
+      <% @question.images.each_with_index do |image, i| %>
+        <%= image_tag image.variant(:display),
+                      id: "question-image-#{i}",
+                      class: "question-image #{i == 0 ? 'active' : ''}" %>
+      <% end %>
+    <% end %>  
     </div>
     <p>Q.<%= session[:question_num] %></p>
     <div>
