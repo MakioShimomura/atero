@@ -10,10 +10,6 @@ document.addEventListener("turbo:load", function() {
   setTimeout(() => {
     question_image_0.classList.remove('active')
     question_image_1.classList.add('active')
-    setTimeout(() => {
-      question_image_1.classList.remove('active')
-      question_image_2.classList.add('active')
-    }, 3000)
   }, 2000)
   
   for (let choice_btn of choices_btn) {

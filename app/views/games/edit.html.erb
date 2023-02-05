@@ -1,14 +1,14 @@
-<div class="row" style="margin-top: 50px">
+<div class="row">
   <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
     <div id="judgment" class="question-judgment"></div>
-    <div class="z-depth-1">
+    <div class="z-depth-1 question-image">
     <% if @question.images.attached? %>
       <% @question.images.each_with_index do |image, i| %>
-        <%= image_tag image.variant(:display),
+        <%= image_tag image.variant(:display).processed,
                       id: "question-image-#{i}",
-                      class: "question-image #{i == 0 ? 'active' : ''}" %>
+                      class: "#{i == 0 ? 'active' : ''}" %>
       <% end %>
-    <% end %>  
+    <% end %>
     </div>
     <p>Q.<%= session[:question_num] %></p>
     <div>
