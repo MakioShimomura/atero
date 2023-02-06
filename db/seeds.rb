@@ -1,41 +1,24 @@
-# 回答済のユーザー
-Game.create!(name: "ザッハトルテ",
-              question_quantities: 5,
-              correct_quantities: 4,
-              end_at: Time.zone.now + 1.minutes)
-# 回答中のユーザー
-Game.create!(name: "回答途中",
-              question_quantities: 5,
-              correct_quantities: 1)
-              
-Game.create!(name: "はなまる満点",
-              question_quantities: 4,
-              correct_quantities: 4,
-              end_at: Time.zone.now + 1.minutes)
-
-#回答済、正答率が60%のユーザー9人（ランキング用）
-9.times do |n|
-  name = "60%#{n}"
-  finish_time =Time.zone.now + n.minutes
-  question_quantities = 5
-  correct_quantities = 3
+# 回答済みのユーザー
+base_at = Time.zone.now + 30.second
+names = ["みっちゃん", "ふく", "うの", "まっきー"]
+names.each.with_index(1) do |name, i|
   Game.create!(name: name,
-              question_quantities: question_quantities,
-              correct_quantities: correct_quantities,
-              end_at: finish_time)
+               question_quantities: 4,
+               correct_quantities: 2,
+               end_at: base_at + i.second)
 end
-
-#回答済、正答率が40%のユーザー9人（ランキング用）
-9.times do |n|
-  name = "40%#{n}"
-  finish_time =Time.zone.now + n.minutes
-  question_quantities = 5
-  correct_quantities = 2
-  Game.create!(name: name,
-              question_quantities: question_quantities,
-              correct_quantities: correct_quantities,
-              end_at: finish_time)
+# 同率のユーザー
+2.times do
+  Game.create!(name: "同率くん",
+             question_quantities: 4,
+             correct_quantities: 2,
+             end_at: base_at + 10.second)
 end
+# 最下位のユーザー
+Game.create!(name: "最下位くん",
+             question_quantities: 4,
+             correct_quantities: 0,
+             end_at: base_at + 10.second)
 
 # 正答からchoice(選択肢)を作成
 correct_choices_texts = ["ネコ","イヌ","パンダ","キリン","レッサーパンダ","ネコ","マーラ","オカピー"]
