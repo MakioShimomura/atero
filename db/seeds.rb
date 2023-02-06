@@ -1,3 +1,7 @@
+Admin.create!(email: "sonic_garden@camp.jp",
+              password:               "foobar",
+              password_confirmation: "foobar")
+              
 # 回答済みのユーザー
 base_at = Time.zone.now + 30.second
 names = ["みっちゃん", "ふく", "うの", "まっきー"]
