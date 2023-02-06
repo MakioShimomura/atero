@@ -25,6 +25,10 @@ Game.create!(name: "はなまる満点",
               end_at: finish_time)
 end
 
+Admin.create!(email: "sonic_garden@camp.jp",
+              password:               "foobar",
+              password_confirmation: "foobar")
+
 #回答済、正答率が40%のユーザー9人（ランキング用）
 9.times do |n|
   name = "40%#{n}"
