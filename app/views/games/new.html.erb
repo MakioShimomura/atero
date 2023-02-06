@@ -28,10 +28,10 @@
     <tbody>
       <% @games.each do |game| %>
       <tr>
-        <td>1</td>
+        <td><%= game.rank %></td>
         <td><%= game.name %></td>
-        <td><%= game.percentage_correct_answers %>%</td>
-        <td><%= pluralize(game.answer_time,"second") %></td>
+        <td><%= game.correct_rate %>%</td>
+        <td><%= game.answer_time.floor() %>秒</td>
       </tr>
       <% end %>
     </tbody>

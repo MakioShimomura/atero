@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   def new
     @game = Game.new
     @game.name = cookies[:game_name] if cookies[:game_name]
-    @games = Game.sorted
+    @games = Game.rank_sorted
   end
 
   def create
