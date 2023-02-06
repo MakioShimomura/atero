@@ -10,8 +10,8 @@
       <% end %>
     <% end %>
     </div>
-    <p>Q.<%= session[:question_num] %></p>
-    <div>
+    <p>Q.<%= session[:question_num] %> / <%= Game.find(params[:id]).question_quantities %>問中</p>
+
       <%= form_with scope: :question,
                     url: game_path(params[:id]),
                     method: :patch,
