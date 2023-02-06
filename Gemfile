@@ -16,7 +16,7 @@ gem "puma",            "5.6.4"
 gem "bootsnap",        "1.12.0", require: false
 gem "rmagick",         "5.1.0"
 gem "pg",              "1.3.5"
-
+gem 'dotenv-rails'
 
 group :development, :test do
   gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]
