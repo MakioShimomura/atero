@@ -25,7 +25,7 @@ Game.create!(name: "最下位くん",
              end_at: base_at + 10.second)
 
 # 正答からchoice(選択肢)を作成
-correct_choices_texts = ["ネコ","イヌ","パンダ","キリン","レッサーパンダ","ネコ","マーラ","オカピー"]
+correct_choices_texts = ["ネコ","イヌ","パンダ","キリン","レッサーパンダ","マーラ","オカピー"]
 correct_choices_texts.each { |correct_choice_text| Choice.create!(text: correct_choice_text) }
 
 # 正答のモデルからquestionを作成
@@ -45,18 +45,8 @@ correct_choices.each_with_index do |correct_choice, i|
   question.images.attach(io: File.open("app/assets/images/question/#{filename}.jpg"), filename: "#{filename}_original.jpg")
 end
 
-# choice（animal名）作成
-#99.times do |n|
-  #text  = Faker::Creature::Animal.name
-  #Choice.create!(text:  text)
-#end
-
-g_text = []
 100.times do
- g_text.push(Faker::Creature::Animal.name)
-end
-# g_text => ["ネコ", "ネコ", "イヌ"......]
-g_text = g_text.uniq
-g_text.each do |text|
-  Choice.create!(text: text)
+ choice_text = Faker::Creature::Animal.name
+ exist_text = Choice.find_by(text: choice_text)
+ Choice.create(text: choice_text) if exist_text.nil?
 end
