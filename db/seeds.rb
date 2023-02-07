@@ -46,7 +46,17 @@ correct_choices.each_with_index do |correct_choice, i|
 end
 
 # choice（animal名）作成
-99.times do |n|
-  text  = Faker::Creature::Animal.name
-  Choice.create!(text:  text)
+#99.times do |n|
+  #text  = Faker::Creature::Animal.name
+  #Choice.create!(text:  text)
+#end
+
+g_text = []
+100.times do
+ g_text.push(Faker::Creature::Animal.name)
+end
+# g_text => ["ネコ", "ネコ", "イヌ"......]
+g_text = g_text.uniq
+g_text.each do |text|
+  Choice.create!(text: text)
 end
