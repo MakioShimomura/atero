@@ -33,16 +33,7 @@ correct_choices = Choice.all()
 correct_choices.each_with_index do |correct_choice, i|
   question = correct_choice.questions.create!(text: "この画像はなんでしょう")
   filename = "question#{i + 1}"
-  # /tmpに画像を格納
-  target_image = Magick::ImageList.new("app/assets/images/question/#{filename}.jpg")
-  target_image.blur_image(50.0, 50.0)
-              .write("/tmp/#{filename}_blur.jpg")
-              .quantize(256, Magick::GRAYColorspace)
-              .write("/tmp/#{filename}_monochrome.jpg")
-  # active storageに保存
-  question.images.attach(io: File.open("/tmp/#{filename}_monochrome.jpg"), filename: "#{filename}_monochrome.jpg")
-  question.images.attach(io: File.open("/tmp/#{filename}_blur.jpg"), filename: "#{filename}_blur.jpg")
-  question.images.attach(io: File.open("app/assets/images/question/#{filename}.jpg"), filename: "#{filename}_original.jpg")
+  question.image.attach(io: File.open("app/assets/images/question/#{filename}.jpg"), filename: "#{filename}.jpg")
 end
 
 # choice（animal名）作成

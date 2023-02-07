@@ -1,0 +1,8 @@
+<h1>作成した問題</h1>
+<% @questions.each do |question|%>
+  <div>
+    Q.<%= question.text %>
+    A.<%= choice_name(question.choice_id) %>
+    <%#= image_tag question.image.variant(:display) if question.image.attached? %>
+  </div>
+<% end %>
