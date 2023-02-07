@@ -1,3 +1,4 @@
+<%= notice %>
 <div class="row z-depth-1 start-card">
   <p class="bold start-title">ゲームを始める</p>
   <%= form_with(model: @game, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
@@ -23,6 +24,7 @@
         <th>ニックネーム</th>
         <th>正答率</th>
         <th>タイム</th>
+        <th>日時</th>
       </tr>
     </thead>
     <tbody>
@@ -32,8 +34,19 @@
         <td><%= game.name %></td>
         <td><%= game.correct_rate %>%</td>
         <td><%= game.answer_time.floor() %>秒</td>
+        <td><%= l game.end_at %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+<% if logged_in? %>
+  <li><%= link_to "問題の編集", '#' %></li>
+  <li><%= link_to "選択肢の編集", '#' %></li>
+  <li>
+    <%= link_to "Log out", logout_path,
+                             data: { "turbo-method": :delete } %>
+  </li>
+  <% else %>
+    <li><%= link_to "管理者向け", login_path %></li>
+  <% end %>
