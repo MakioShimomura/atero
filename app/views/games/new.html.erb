@@ -24,6 +24,7 @@
         <th>ニックネーム</th>
         <th>正答率</th>
         <th>タイム</th>
+        <th>日時</th>
       </tr>
     </thead>
     <tbody>
@@ -33,6 +34,7 @@
         <td><%= game.name %></td>
         <td><%= game.correct_rate %>%</td>
         <td><%= game.answer_time.floor() %>秒</td>
+        <td><%= l game.end_at %></td>
       </tr>
       <% end %>
     </tbody>
