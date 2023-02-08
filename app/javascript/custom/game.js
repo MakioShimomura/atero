@@ -1,5 +1,6 @@
 document.addEventListener("turbo:load", function() {
   let judgment = document.getElementById('judgment')
+  if (judgment === null) { return }
   let choices_btn = document.getElementsByName('question[choice]')
   
   let question_image_0 = document.getElementById('question-image-0')
