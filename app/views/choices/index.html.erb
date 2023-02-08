@@ -1,20 +1,30 @@
-<h3>選択肢一覧</h3>
-<%= render 'layouts/flash_messages' %>
-<%= form_with(model: @choice) do |f| %>
-  <div class="mb-0">
-    <%= f.label :選択肢の追加 %>
-    <%= f.text_field :text %>
-    
-    <button type='submit' class="waves-effect waves-light btn">追加</button>
-  </div>
-<% end %>
-
-<% @choices.each do |choice| %>
-  <li>
-    <%= choice.text %>
-    <% if choice.questions.empty? %>
-    <%= link_to "削除", choice, data: { "turbo-method": :delete,
-                                          turbo_confirm: "You sure?" } %>
+<div class="row z-depth-1 start-card">
+  <p class="bold admin-title">選択肢一覧</p>
+  <div class="col s12 m8 l6 offset-m2 offset-l3 mb-5">
+    <%= render 'layouts/flash_messages' %>
+    <%= form_with(model: @choice) do |f| %>
+      <div class="mb-0">
+        <%= f.label :選択肢の追加 %>
+        <%= f.text_field :text %>
+      </div>
+      <button type='submit' class="waves-effect waves-light btn full">追加</button>
     <% end %>
-    </li>
-<% end %>
+  </div>
+  <div class="col s12">
+    <ul class="collection">
+      <% @choices.each do |choice| %>
+        <li class="collection-item">
+          <span class="bold"><%= choice.text %></span>
+          <% if choice.questions.empty? %>
+            <%= link_to "削除", choice,
+                                data: { "turbo-method": :delete,
+                                        turbo_confirm: "本当に削除しますか？" },
+                                class: 'waves-effect waves-light btn' %>
+          <% else %>
+            <span class="btn disabled waves-light">削除</span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
