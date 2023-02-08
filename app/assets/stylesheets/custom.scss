@@ -51,6 +51,12 @@ body {
   }
 }
 
+.collection .collection-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 // === component ===
 .logo {
   margin-bottom: 30px;
@@ -190,6 +196,34 @@ body {
     font-size: 25px;
     color: #26a69a;
   }
+}
+
+.login {
+  &-card {
+    margin: 0 0 20px!important;
+    padding: 26px 20px 60px;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+}
+
+.admin-title {
+    margin: 0 0 24px;
+    color: #26a69a;
+    font-size: 18px;
+    position: relative;
+    padding-left: 30px;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-52%);
+      width: 23px;
+      height: 23px;
+      background: image-url('icon/admin.png') center / contain no-repeat;
+    }
 }
 
 .debug_dump {
