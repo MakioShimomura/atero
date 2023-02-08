@@ -31,7 +31,7 @@ correct_choices_texts.each { |correct_choice_text| Choice.create!(text: correct_
 # 正答のモデルからquestionを作成
 correct_choices = Choice.all()
 correct_choices.each_with_index do |correct_choice, i|
-  question = correct_choice.questions.create!(text: "この画像はなんでしょう")
+  question = correct_choice.questions.create!
   filename = "question#{i + 1}"
   question.image.attach(io: File.open("app/assets/images/question/#{filename}.jpg"), filename: "#{filename}.jpg")
 end

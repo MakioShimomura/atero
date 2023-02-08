@@ -47,7 +47,7 @@
   </table>
 </div>
 <% if logged_in? %>
-  <li><%= link_to "問題の編集", '#' %></li>
+  <li><%= link_to "問題の編集", questions_path %></li>
   <li><%= link_to "選択肢の編集", choices_path %></li>
   <li>
     <%= link_to "Log out", logout_path,
