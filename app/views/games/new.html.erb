@@ -5,7 +5,7 @@
     <div class="mb-0">
       <%= f.label 'ニックネーム' %>
       <% if @game.name %>
-         <%= f.text_field :name, placeholder: @game.name %>
+        <%= f.text_field :name, placeholder: @game.name %>
       <% else %>
         <%= f.text_field :name %>
       <% end %>
@@ -40,7 +40,7 @@
         <td><%= game.name %></td>
         <td><%= game.correct_rate %>%</td>
         <td><%= game.answer_time.floor() %>秒</td>
-        <td><%= l game.end_at %></td>
+        <td class="end-at"><%= display_end_at(game.end_at) %></td>
       </tr>
       <% end %>
     </tbody>

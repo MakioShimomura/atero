@@ -1,5 +1,10 @@
 module GamesHelper
   
+  def display_end_at(time)
+    format_at = I18n.l time
+    format_at.gsub(/ /, '<br>').html_safe
+  end
+  
   # modelで書くともっとシンプルになる
   # def correct_answers
   #   "#{@game.correct_quantities}/#{@game.question_quantities}"
