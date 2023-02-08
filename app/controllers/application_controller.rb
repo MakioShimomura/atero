@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include SessionsHelper
 
   # # 例外処理(本番環境でないと機能しない？)
   # rescue_from ActiveRecord::RecordNotFound, with: :render_404
