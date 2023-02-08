@@ -133,7 +133,7 @@ body {
       background: image-url('icon/wrong.png') center / contain no-repeat;
     }
   }
-  &-image {
+  &-image-frame {
     position: relative;
     overflow: hidden;
     margin: 0 auto;
@@ -141,18 +141,23 @@ body {
     padding-top: 80%;
     width: 80%;
     background-color: #eee;
-    img {
-      position: absolute;
-      // display: none;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      &.active {
-        display: block;
-      }
+  }
+  &-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    filter: blur(80px);
+    animation: blur 6s linear forwards;
+    &.non-blur {
+      filter: blur(0)!important;
     }
   }
+}
+
+@keyframes blur {
+	100% { filter: blur(5px); }
 }
 
 .result {
