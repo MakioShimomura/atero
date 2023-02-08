@@ -1,4 +1,5 @@
 class Game < ApplicationRecord
+  belongs_to :match, optional: true
   validates :name, presence: true, length: { maximum: 20 }
   
   scope :rank_sorted, -> {

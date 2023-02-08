@@ -1,17 +1,23 @@
-<%= notice %>
+<%= render 'layouts/flash_messages' %>
 <div class="row z-depth-1 start-card">
   <p class="bold start-title">ゲームを始める</p>
   <%= form_with(model: @game, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
     <div class="mb-0">
-      <%= f.label :ニックネーム %>
+      <%= f.label 'ニックネーム' %>
       <% if @game.name %>
          <%= f.text_field :name, placeholder: @game.name %>
       <% else %>
         <%= f.text_field :name %>
       <% end %>
     </div>
+    <div class="center-align mb-1">
+      <button type='submit' class="waves-effect waves-light btn-large full">1人用モード</button>
+    </div>
+  <% end %>
+  <%= form_with(url: matches_path, method: :post, scope: :match, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
+    <%= f.hidden_field :name, value: @game.name %>
     <div class="center-align">
-      <button type='submit' class="waves-effect waves-light btn-large full">ゲーム開始</button>
+      <button type='submit' class="waves-effect waves-light btn-large full">対戦モード</button>
     </div>
   <% end %>
 </div>
@@ -42,7 +48,7 @@
 </div>
 <% if logged_in? %>
   <li><%= link_to "問題の編集", '#' %></li>
-  <li><%= link_to "選択肢の編集", '#' %></li>
+  <li><%= link_to "選択肢の編集", choices_path %></li>
   <li>
     <%= link_to "Log out", logout_path,
                              data: { "turbo-method": :delete } %>

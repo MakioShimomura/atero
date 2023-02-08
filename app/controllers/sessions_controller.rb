@@ -7,9 +7,10 @@ class SessionsController < ApplicationController
     if admin && admin.authenticate(params[:session][:password])
       reset_session
       log_in admin
-      redirect_to root_path, notice: '管理者としてログインしました'
+      flash.now[:success] = '管理者としてログインしました'
+      redirect_to root_path
     else
-      flash.now[:alert] = 'Invalid email/password combination'
+      flash.now[:danger] = 'Invalid email/password combination'
       render 'new', status: :unprocessable_entity
     end
   end
