@@ -1,9 +1,11 @@
-<% if @match.status == 0 %>
-  <h1>対戦相手探し中...</h1>
-<% elsif @match.status == 1 && @game.end_at %>
-  <h1>対戦相手の回答待ち...</h1>
-<% elsif @match.status == 1 && @opponent_game %>
-  <div class="row">
+<div id="data" data-match-id="<%= @match.id %>" data-game-id="<%= @game.id %>"></div>
+
+<div>
+  <div id="js-play-screen-1" class="<%= @match.status == 0 ? '' : 'hide' %>">
+    <h1>対戦相手探し中...</h1>
+  </div>
+  
+  <div id="js-play-screen-2" class="row <%= @match.status == 1 && @game.end_at.nil? ? '' : 'hide' %>">
     <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
       <div id="judgment" class="question-judgment"></div>
       <div class="z-depth-1 question-image">
@@ -15,7 +17,7 @@
         <% end %>
       <% end %>
       </div>
-      <p>Q.<%= session[:question_num] %> / <%= Game.find(params[:game_id]).question_quantities %>問中</p>
+      <p>Q.<%= session[:question_num] %> / <%= @game.question_quantities %>問中</p>
   
         <%= form_with scope: :question,
                       url: match_update_path(params[:match_id], params[:game_id]),
@@ -35,7 +37,14 @@
       </div>
     </div>
   </div>
-<% elsif @match.status == 2 %>
+  
+  <div id="js-play-screen-3" class="<%= @match.status == 1 && @game.end_at ? '' : 'hide' %>">
+    <h1>対戦相手の回答待ち...</h1>
+  </div>
+</div>
+
+<%# 結果画面はリダイレクト・ページのリロードで表示 %>
+<% if @match.status == 2 %>
   <div class="row">
     <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
       <p><span class="bold"><%= @game.name %></span>さんの結果は...</p>
@@ -48,7 +57,3 @@
     </div>
   </div>
 <% end %>
-
-<p><%= "@match.id: #{ @match.id }" %></p>
-<p><%= "@game.id: #{ @game.id }" %></p>
-<p><%= "@opponent_game.id: #{ @opponent_game ? @opponent_game.id : 'なし' }" %></p>

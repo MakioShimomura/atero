@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_162947) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "status"
+    t.integer "status", default: 0, null: false
     t.datetime "start_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   root "games#new"
   resources :games, only: [:new, :index, :create, :edit, :update, :show]
   resources :matches, only: [:create]
