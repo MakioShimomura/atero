@@ -1,6 +1,5 @@
 <%= link_to "問題作成ページ", new_question_path %>
 <h1>作成した問題</h1>
-<%# debugger %>
 <%= render 'layouts/flash_messages' %>
 <% @questions.reverse_each do |question|%>
   <div>

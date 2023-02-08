@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :require_admin, only: [:new, :create, :index, :destroy]
   before_action :require_choice_text, only: :create
+  before_action :require_img, only: :create
   
   def index
     @questions = Question.all
@@ -59,6 +60,14 @@ class QuestionsController < ApplicationController
     # 解答は入力されていなければならない
     def require_choice_text
       if choice_params[:choice_text].empty?
+        flash.now[:danger] = "問題の画像/解答を入力してください"
+        return render 'new', status: :see_other
+      end
+    end
+    
+    # 画像は選択されていなければならない
+    def require_img
+      if params[:question][:image].nil?
         flash.now[:danger] = "問題の画像/解答を入力してください"
         return render 'new', status: :see_other
       end
