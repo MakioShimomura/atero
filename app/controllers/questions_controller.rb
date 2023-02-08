@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  # before_action :require_admin, only: [:new, :create, :index, :destroy]
+  
   def index
     @questions = Question.all
   end
@@ -7,17 +9,19 @@ class QuestionsController < ApplicationController
   end
   
   def create
-    # debugger
-    # もし、choiceの中に同じテキストがあれば、それを使う。
-    #choice_text = Choice.find_by(text: params[:question][:choice_text])
-    # 無ければ、新しく作成する
-    # choice_text = Choice.new(text: params[:question][:choice_text])
+    @choice = Choice.find_by(text: choice_params[:choice_text])
     
-    
-    choice = Choice.new(text: choice_params[:choice_text])
-    question = choice.questions.build(question_params)
+    # もし、@choice（正解テキスト）の中にテキストがあれば、それを使う。
+    if @choice
+      @choice
+    else
+      # 無ければ、新しく作成する
+      @choice = Choice.new(text: choice_params[:choice_text])
+    end
+
+    question = @choice.questions.build(question_params)
     question.image.attach(params[:question][:image])
-    # debugger
+    
     if question.save
       redirect_to questions_path
     else
@@ -25,7 +29,10 @@ class QuestionsController < ApplicationController
     end
   end
   
+  
   def destroy
+    Question.find(params[:id]).destroy
+    redirect_to question_url, status: :see_other
   end
   
   private
@@ -36,6 +43,9 @@ class QuestionsController < ApplicationController
     def question_params
       params.require(:question).permit(:text, :image)
     end
-    # def is_admin
-    # end
+    
+    # adminにログインしていなければ、ログイン画面へ
+    def require_admin
+      redirect_to login_path if !logged_in?
+    end
 end

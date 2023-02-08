@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   post   "/login",   to: "sessions#create"
   delete "/logout",  to: "sessions#destroy"
   resources :games, only: [:new, :index, :create, :edit, :update, :show]
-  resources :questions, only: [:new, :create, :destroy, :index]
+  resources :questions, only: [:new, :create, :destroy, :index, :update]
 end
