@@ -1,0 +1,20 @@
+<h3>選択肢一覧</h3>
+<%= render 'layouts/flash_messages' %>
+<%= form_with(model: @choice) do |f| %>
+  <div class="mb-0">
+    <%= f.label :選択肢の追加 %>
+    <%= f.text_field :text %>
+    
+    <button type='submit' class="waves-effect waves-light btn">追加</button>
+  </div>
+<% end %>
+
+<% @choices.each do |choice| %>
+  <li>
+    <%= choice.text %>
+    <% if choice.questions.empty? %>
+    <%= link_to "削除", choice, data: { "turbo-method": :delete,
+                                          turbo_confirm: "You sure?" } %>
+    <% end %>
+    </li>
+<% end %>
