@@ -1,13 +1,14 @@
 class QuestionsController < ApplicationController
   before_action :require_admin, only: [:new, :create, :index, :destroy]
   before_action :require_choice_text, only: :create
-  before_action :require_img, only: :create
+  # before_action :require_img, only: :create
   
   def index
     @questions = Question.all
   end
 
   def new
+    get_labels
   end
   
   def create
@@ -21,7 +22,14 @@ class QuestionsController < ApplicationController
       @choice = Choice.new(text: choice_params[:choice_text])
     end
     question = @choice.questions.build#(question_params)
-    question.image.attach(params[:question][:image])
+    # question.image.attach(params[:question][:image])
+    img = File.open(image)
+    question.image.attach(io: img, filename:'tmp.jpg' )
+    
+    # ---------仮にここで削除
+    File.delete(image)
+    # -------------
+    
     if question.save
       flash[:success] = "問題を作成しました"
       redirect_to questions_path
@@ -43,7 +51,45 @@ class QuestionsController < ApplicationController
     end
   end
   
+  def predict
+    # アップロードファイル <- file_field
+    upload_file = params[:upload_file]
+    
+    if upload_file.present?
+      tmp_img = upload_file.read
+      # アップロードファイルの元の名前
+      upload_file_name = "tmp.jpg"  # upload_file.original_filename
+      # プロフィール画像を保存するディレクトリー
+      upload_dir = Rails.root.join("app", "assets","images","predict")
+      # アップロードするファイルのフルパス
+      upload_file_path = upload_dir + upload_file_name
+      # アップロードファイルの書き込み
+      File.binwrite(upload_file_path, tmp_img)
+      # 書き込みせずにAPIに渡せるか？
+      # @labels = ["ネコ", "ネココ", "ネコココ"] # このラベルをリダイレクト後のビューに渡す
+
+      # tmp.jpgを消す手続き
+      # 同時に投稿したときの手続き
+      # newのときではなく、labesを格納しておく方法
+    end
+    redirect_to questions_predict_path
+  end
+  
   private
+    def get_labels
+      if File.exist?(image)
+        # image = 'app/assets/images/tmp/tmp.jpg'
+        # eng_labels = Vision.get_labels(image)
+        # @labels = Deepl.kana(eng_labels)
+        @labels = ["ア","カ","サ"]
+      end
+    end
+  
+  
+    def image
+      'app/assets/images/predict/tmp.jpg'
+    end
+  
     def choice_params
       params.require(:question).permit(:choice_text)
     end

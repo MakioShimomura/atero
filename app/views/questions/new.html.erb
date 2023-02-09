@@ -1,15 +1,30 @@
 <%= link_to "問題一覧", questions_path %>
 <h1>問題作成</h1>
 <%= render 'layouts/flash_messages' %>
-<%= form_with(url: questions_path, scope: :question) do |f| %>
+<%= form_with(url:questions_predict_path) do |f| %>
   <div>
     <%= f.label :画像 %>
-    <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %>
+    <%= f.file_field(:upload_file, accept: "image/jpeg,image/gif,image/png") %>
+    <button>この画像をセット</button>
   </div>
+<% end %>
+
+<%= form_with(url: questions_path, scope: :question) do |f| %>
   <div>
     <%= f.label :正解 %>
     <%= f.text_field :choice_text %>
   </div>
+  <div>
+    <% if @labels %>
+      <button onclick="handleClick()"><%= @labels[0] %></button>
+      <p><%= @labels[0] %></p>
+      <p><%= @labels[1] %></p>
+      <p><%= @labels[2] %></p>
+    <% else %>
+      <p>なし</p>
+    <% end %>
+  </div>
+  
   <div>
     <%= f.submit "作成" %>
   </div>
