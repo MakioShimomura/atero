@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   before_action :is_session_game_id, only: :edit
   before_action :is_correct_game_id, only: :edit
-  
+
   def show
     if @game = Game.find_by( id: params[:id] )
       reset_session
@@ -18,7 +18,6 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(game_params)
-
     if @game.save
       reset_session
       cookies.permanent[:game_name] = @game.name
@@ -45,7 +44,6 @@ class GamesController < ApplicationController
   def update
     game = Game.find(params[:id])
     game.correct_quantities += 1 if params[:question][:choice] == "true"
-
     if session[:question_num] == game.question_quantities
       game.end_at = Time.now
       game.save
@@ -61,11 +59,11 @@ class GamesController < ApplicationController
     def game_params
       params.require(:game).permit(:name)
     end
-    
+
     def is_session_game_id
       redirect_to root_path if session[:game_id].nil?
     end
-    
+
     def is_correct_game_id
       redirect_to root_path if session[:game_id] != params[:id].to_i
     end

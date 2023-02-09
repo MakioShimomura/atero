@@ -24,6 +24,19 @@
     <%= f.label :正解 %>
     <%= f.text_field :choice_text %>
   </div>
+<<<<<<< HEAD
+  <div>
+    <% if @labels %>
+      <button onclick="handleClick()"><%= @labels[0] %></button>
+      <p><%= @labels[0] %></p>
+      <p><%= @labels[1] %></p>
+      <p><%= @labels[2] %></p>
+    <% else %>
+      <p>なし</p>
+    <% end %>
+  </div>
+=======
+>>>>>>> main
 
   <div>
     <%= f.submit "作成" %>
