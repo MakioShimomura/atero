@@ -5,6 +5,10 @@ module GamesHelper
     format_at.gsub(/ /, '<br>').html_safe
   end
   
+  def calc_question_progress(current_num, question_quantities)
+    (current_num - 1) * 100 / question_quantities
+  end
+  
   # modelで書くともっとシンプルになる
   # def correct_answers
   #   "#{@game.correct_quantities}/#{@game.question_quantities}"
