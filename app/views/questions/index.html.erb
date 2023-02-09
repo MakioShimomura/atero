@@ -1,11 +1,24 @@
-<%= link_to "問題作成ページ", new_question_path %>
-<h1>作成した問題</h1>
 <%= render 'layouts/flash_messages' %>
-<% @questions.reverse_each do |question|%>
-  <div>
-    A.<%= choice_name(question.choice_id) %>
-    <%= image_tag question.image.variant(:display) if question.image.attached? %>
-    <%= link_to "問題を削除する", question, data: { "turbo-method": :delete,
-                                              turbo_confirm: "You sure?" } %>
+<div class="row z-depth-1 start-card">
+  <div class="admin-question-title-wrap mb-1">
+    <p class="bold admin-title">問題一覧</p>
+    <%= link_to "問題を作成", new_question_path, class: 'waves-effect waves-light btn' %>
   </div>
-<% end %>
+  <div class="col s12">
+    <ul class="collection">
+      <% @questions.reverse_each do |question|%>
+        <li class="collection-item">
+          <div class="admin-question-content">
+            <div class="admin-question-image-frame">
+              <%= image_tag question.image.variant(:display), class: 'admin-question-image' if question.image.attached? %>
+            </div>
+            <span class="bold"><%= question.choice.text %></span>
+          </div>
+          <%= link_to "削除", question, data: { "turbo-method": :delete,
+                                                turbo_confirm: "本当に削除しますか？", },
+                                        class: 'waves-effect waves-light btn' %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

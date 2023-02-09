@@ -25,7 +25,14 @@ Game.create!(name: "最下位くん",
              end_at: base_at + 10.second)
 
 # 正答からchoice(選択肢)を作成
-correct_choices_texts = ["ネコ","イヌ","パンダ","キリン","レッサーパンダ","マーラ","オカピー"]
+correct_choices_texts = [
+  "ネコ","イヌ","パンダ","キリン","レッサーパンダ","マーラ",
+  "オカピー","オジサン","ワラビー","フェラーリ","マクドナルド",
+  "ソニックガーデン","スヌーピー","ペン","エンピツ","カメ",
+  "バスケット","サッカー","バレーボール","テニスボール",
+  "ラグビーボール","ユキダルマ","ルフィ","ゾロ","ジンベイ",
+  "チョッパー","ナルト","サスケ","カカシ","メルカリ","ライン"
+]
 correct_choices_texts.each { |correct_choice_text| Choice.create!(text: correct_choice_text) }
 
 # 正答のモデルからquestionを作成
