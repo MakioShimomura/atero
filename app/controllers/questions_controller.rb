@@ -73,9 +73,9 @@ class QuestionsController < ApplicationController
   private
     def get_labels
       if Dir.glob("#{Rails.root}/app/assets/images/predict/**/*").any?
-        # eng_labels = Vision.get_labels(image)
-        # @labels = Deepl.kana(eng_labels)
-        @labels = ["ア","カ","サ"]
+        eng_labels = Vision.get_labels(image)
+        @labels = Deepl.kana(eng_labels)
+        # @labels = ["ア","カ","サ"]
       end
     end
 
