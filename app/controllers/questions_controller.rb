@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   before_action :require_admin, only: [:new, :create, :index, :destroy]
   before_action :require_choice_text, only: :create
   # before_action :require_img, only: :create
-  
+
   def index
     @questions = Question.all
   end
@@ -10,10 +10,10 @@ class QuestionsController < ApplicationController
   def new
     get_labels
   end
-  
+
   def create
     @choice = Choice.find_by(text: choice_params[:choice_text])
-    
+
     # もし、@choice（正解テキスト）の中にテキストがあれば、それを使う。
     if @choice
       @choice
@@ -25,11 +25,11 @@ class QuestionsController < ApplicationController
     # question.image.attach(params[:question][:image])
     img = File.open(image)
     question.image.attach(io: img, filename:'tmp.jpg' )
-    
+
     # ---------仮にここで削除
-    File.delete(image)
+    del_images
     # -------------
-    
+
     if question.save
       flash[:success] = "問題を作成しました"
       redirect_to questions_path
@@ -38,8 +38,8 @@ class QuestionsController < ApplicationController
       render 'new', status: :unprocessable_entity
     end
   end
-  
-  
+
+
   def destroy
     question = Question.find(params[:id]).destroy
     if question.destroyed?
@@ -50,59 +50,57 @@ class QuestionsController < ApplicationController
       redirect_to question_url, status: :see_other
     end
   end
-  
+
   def predict
     # アップロードファイル <- file_field
     upload_file = params[:upload_file]
-    
+
     if upload_file.present?
+      # 一度だけ使える.readでファイルを取得
       tmp_img = upload_file.read
-      # アップロードファイルの元の名前
-      upload_file_name = "tmp.jpg"  # upload_file.original_filename
-      # プロフィール画像を保存するディレクトリー
+      # ファイルネームを取得
+      file_name = upload_file.original_filename
+      # アップロード先のディレクトリ
       upload_dir = Rails.root.join("app", "assets","images","predict")
-      # アップロードするファイルのフルパス
-      upload_file_path = upload_dir + upload_file_name
+      # アップロードファイルのフルパス
+      upload_file_path = upload_dir + file_name
       # アップロードファイルの書き込み
       File.binwrite(upload_file_path, tmp_img)
-      # 書き込みせずにAPIに渡せるか？
-      # @labels = ["ネコ", "ネココ", "ネコココ"] # このラベルをリダイレクト後のビューに渡す
-
-      # tmp.jpgを消す手続き
-      # 同時に投稿したときの手続き
-      # newのときではなく、labesを格納しておく方法
     end
     redirect_to questions_predict_path
   end
-  
+
   private
     def get_labels
-      if File.exist?(image)
-        # image = 'app/assets/images/tmp/tmp.jpg'
+      if Dir.glob("#{Rails.root}/app/assets/images/predict/**/*").any?
         # eng_labels = Vision.get_labels(image)
         # @labels = Deepl.kana(eng_labels)
         @labels = ["ア","カ","サ"]
       end
     end
-  
-  
-    def image
-      'app/assets/images/predict/tmp.jpg'
+
+    def del_images
+       require 'fileutils'
+       FileUtils.rm_rf("#{Rails.root}/app/assets/images/predict/.")
     end
-  
+
+    def image
+      Dir.glob("#{Rails.root}/app/assets/images/predict/**/*").first
+    end
+
     def choice_params
       params.require(:question).permit(:choice_text)
     end
-    
+
     def question_params
       params.require(:question).permit(:image)
     end
-    
+
     # adminにログインしていなければ、ログイン画面へ
     def require_admin
       redirect_to login_path if !logged_in?
     end
-    
+
     # 解答は入力されていなければならない
     def require_choice_text
       if choice_params[:choice_text].empty?
@@ -110,7 +108,7 @@ class QuestionsController < ApplicationController
         return render 'new', status: :see_other
       end
     end
-    
+
     # 画像は選択されていなければならない
     def require_img
       if params[:question][:image].nil?
