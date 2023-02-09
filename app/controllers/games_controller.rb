@@ -17,16 +17,18 @@ class GamesController < ApplicationController
   end
 
   def create
-    game = Game.new(game_params)
+    @game = Game.new(game_params)
 
-    if game.save
+    if @game.save
       reset_session
-      cookies.permanent[:game_name] = game.name
-      session[:game_id] = game.id
+      cookies.permanent[:game_name] = @game.name
+      session[:game_id] = @game.id
       session[:question_num] = 1
-      redirect_to edit_game_path(game.id)
+      redirect_to edit_game_path(@game.id)
     else
-      render 'new'
+      @games = Game.rank_sorted
+      flash.now[:danger] = '名前が保存できませんでした（12文字以内）'
+      render 'new', status: :unprocessable_entity
     end
   end
 
