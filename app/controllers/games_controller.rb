@@ -22,7 +22,6 @@ class GamesController < ApplicationController
       reset_session
       cookies.permanent[:game_name] = @game.name
       session[:game_id] = @game.id
-      session[:question_num] = 1
       redirect_to edit_game_path(@game.id)
     else
       @games = Game.rank_sorted
@@ -44,13 +43,13 @@ class GamesController < ApplicationController
   def update
     game = Game.find(params[:id])
     game.correct_quantities += 1 if params[:question][:choice] == "true"
-    if session[:question_num] == game.question_quantities
+    if game.current_question_num == game.question_quantities
       game.end_at = Time.now
       game.save
       redirect_to game_path(game)
     else
+      game.current_question_num += 1
       game.save
-      session[:question_num] += 1
       redirect_to edit_game_path
     end
   end

@@ -6,7 +6,7 @@ module GamesHelper
   end
   
   def calc_question_progress(current_num, question_quantities)
-    (current_num - 1) * 100 / question_quantities
+    current_num * 100 / question_quantities
   end
   
   # modelで書くともっとシンプルになる

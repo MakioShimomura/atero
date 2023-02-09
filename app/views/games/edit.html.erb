@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
-    <div id="js-judgment" class="question-judgment"></div>
+    <div id="js-judgment-correct" class="question-judgment correct"></div>
+    <div id="js-judgment-wrong" class="question-judgment wrong"></div>
     <div class="z-depth-1 question-image-frame mb-0">
       <%= image_tag @question.image.variant(:display).processed, class: "question-image",
                                                                  id: "js-question-image" %>
@@ -9,10 +10,10 @@
       <div class="question-name"><%= @game.name %></div>
       <div class="question-progress">
         <p class="number">
-          <span class="current"><%= session[:question_num] %></span>問目
+          <span class="current"><%= @game.current_question_num %></span>問目
         </p>
         <div class="progress">
-          <div class="determinate" style="width: <%= calc_question_progress(session[:question_num], @game.question_quantities) %>%"></div>
+          <div class="determinate" style="width: <%= calc_question_progress(@game.current_question_num, @game.question_quantities) %>%"></div>
         </div>
         <div class="correct">(正解: <%= @game.correct_quantities %>)</div>
       </div>

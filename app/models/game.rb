@@ -1,6 +1,7 @@
 class Game < ApplicationRecord
   belongs_to :match, optional: true
   validates :name, presence: true, length: { maximum: 12 }
+ after_update_commit { GameBroadcastJob.perform_later self }
 
   scope :rank_sorted, -> {
     select("*,

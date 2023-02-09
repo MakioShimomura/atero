@@ -1,38 +1,74 @@
 <div id="data" data-match-id="<%= @match.id %>" data-game-id="<%= @game.id %>"></div>
 
-<div>
-  <div id="js-play-screen-1" class="<%= @match.status == 0 ? '' : 'hide' %>">
-    <h1>対戦相手探し中...</h1>
-  </div>
-  
-  <div id="js-play-screen-2" class="row <%= @match.status == 1 && @game.end_at.nil? ? '' : 'hide' %>">
-    <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
-      <div id="js-judgment" class="question-judgment"></div>
-      <div class="z-depth-1 question-image-frame">
-        <%= image_tag @question.image.variant(:display).processed, class: "question-image",
-                                                                   id: "js-question-image" %>
-      </div>
-      <p>Q.<%= session[:question_num] %> / <%= @game.question_quantities %>問中</p>
-      <%= form_with scope: :question,
-                    url: match_update_path(params[:match_id], params[:game_id]),
-                    method: :patch,
-                    html: {name: "answer_form"} do |f| %>
-        <% @choices.each do |choice| %>
-          <div>
-            <label>
-              <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
-              <div class="waves-effect waves-light btn full mb-1">
-                <%= choice[:text] %>
-              </div>
-            </label>
-          </div>
-        <% end %>
-      <% end %>
+<div id="js-play-screen-1" class="<%= @match.status == 0 ? '' : 'hide' %>">
+  <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
+    <p class="bold">対戦マッチング中...</p>
+    <div class="progress">
+      <div class="indeterminate"></div>
     </div>
   </div>
+</div>
   
-  <div id="js-play-screen-3" class="<%= @match.status == 1 && @game.end_at ? '' : 'hide' %>">
-    <h1>対戦相手の回答待ち...</h1>
+<% if @match.status == 1 && @game.end_at.nil? %>
+<div id="js-play-screen-2" class="row">
+  <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
+    <div id="js-judgment-correct" class="question-judgment correct"></div>
+    <div id="js-judgment-wrong" class="question-judgment wrong"></div>
+    <div class="z-depth-1 question-image-frame mb-0">
+      <%= image_tag @question.image.variant(:display).processed, class: "question-image",
+                                                                 id: "js-question-image" %>
+    </div>
+    <div class="question-card z-depth-1 mb-0">
+      <div class="question-name"><%= @game.name %></div>
+      <div class="question-progress">
+        <p class="number">
+          <span class="current"><%= @game.current_question_num %></span>問目
+        </p>
+        <div class="progress">
+          <div class="determinate" style="width: <%= calc_question_progress(@game.current_question_num, @game.question_quantities) %>%"></div>
+        </div>
+        <div class="correct">(正解: <%= @game.correct_quantities %>)</div>
+      </div>
+    </div>
+    <div id="js-opponent-progress">
+      <div class="question-card z-depth-1 mb-0">
+      <div class="question-name"><%= @opponent_game.name %></div>
+      <div class="question-progress">
+        <p class="number">
+          <span class="current"><%= @opponent_game.current_question_num %></span>問目
+        </p>
+        <div class="progress">
+          <div class="determinate" style="width: <%= calc_question_progress(@opponent_game.current_question_num, @game.question_quantities) %>%"></div>
+        </div>
+        <div class="correct">(正解: <%= @opponent_game.correct_quantities %>)</div>
+      </div>
+    </div>
+    </div>
+    <%= form_with scope: :question,
+                  url: match_update_path(params[:match_id], params[:game_id]),
+                  method: :patch,
+                  html: {name: "answer_form"} do |f| %>
+      <% @choices.each do |choice| %>
+        <div>
+          <label>
+            <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
+            <div class="waves-effect waves-light btn full mb-0">
+              <%= choice[:text] %>
+            </div>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+<div id="js-play-screen-3" class="<%= @match.status == 1 && @game.end_at ? '' : 'hide' %>">
+  <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
+    <p class="bold">対戦相手の回答待ち...</p>
+    <div class="progress">
+      <div class="indeterminate"></div>
+    </div>
   </div>
 </div>
 
@@ -40,13 +76,12 @@
 <% if @match.status == 2 %>
   <div class="row">
     <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
-      <p><span class="bold"><%= @game.name %></span>さんの結果は...</p>
-      <p class="result-text">正解率: <%= @game.correct_answers %> (<%= @game.percentage_correct_answers %>%)</p>
+      <%= victory_judgment(@game, @opponent_game) %>
+      <div><span class="bold"><%= @game.name %></span>さんの成績は...</div>
+      <div class="result-text mb-1">正解率: <%= @game.correct_answers %> (<%= @game.percentage_correct_answers %>%)</div>
+      <div><span class="bold"><%= @opponent_game.name %></span>さんの成績は...</div>
+      <div class="result-text mb-2">正解率: <%= @opponent_game.correct_answers %> (<%= @opponent_game.percentage_correct_answers %>%)</div>
       <%= link_to "Top画面へ戻る", root_path, class: "waves-effect waves-light btn-large" %>
-    </div>
-    <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
-      <p><span class="bold"><%= @opponent_game.name %></span>さんの結果は...</p>
-      <p class="result-text">正解率: <%= @opponent_game.correct_answers %> (<%= @opponent_game.percentage_correct_answers %>%)</p>
     </div>
   </div>
 <% end %>

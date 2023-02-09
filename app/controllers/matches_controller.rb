@@ -12,9 +12,7 @@ class MatchesController < ApplicationController
       game = match.games.create(game_params)
       match.update(status: 1, start_at: Time.now)
     end
-    
-    # TODO(makky):DBに保存するように変更    
-    session[:question_num] = 1
+
     redirect_to match_play_path(match.id, game.id)
   end
   
@@ -30,11 +28,11 @@ class MatchesController < ApplicationController
   def update
     @game.correct_quantities += 1 if params[:question][:choice] == "true"
 
-    if session[:question_num] == @game.question_quantities
+    if @game.current_question_num >= @game.question_quantities
       @game.end_at = Time.now
       @match.update(status: 2) if @opponent_game.end_at
     else
-      session[:question_num] += 1
+      @game.current_question_num += 1
     end
     @game.save
     redirect_to match_play_path(@match.id, @game.id)

@@ -1,0 +1,12 @@
+<div class="question-card z-depth-1 mb-0">
+  <div class="question-name"><%= game.name %></div>
+  <div class="question-progress">
+    <p class="number">
+      <span class="current"><%= game.current_question_num %></span>問目
+    </p>
+    <div class="progress">
+      <div class="determinate" style="width: <%= calc_question_progress(game.current_question_num, game.question_quantities) %>%"></div>
+    </div>
+    <div class="correct">(正解: <%= game.correct_quantities %>)</div>
+  </div>
+</div>
