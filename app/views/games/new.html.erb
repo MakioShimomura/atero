@@ -4,7 +4,7 @@
   <div class="row z-depth-1 start-card">
     <p class="bold admin-title">管理者メニュー</p>
     <div class="col s12 m8 l6 offset-m2 offset-l3">
-      <%= link_to "問題の編集", '#', class: "waves-effect waves-light btn-large full mb-1"%>
+      <%= link_to "問題の編集", questions_path, class: "waves-effect waves-light btn-large full mb-1"%>
       <%= link_to "選択肢の編集", choices_path,  class: "waves-effect waves-light btn-large full mb-1" %>
       <%= link_to "ログアウト", logout_path,
                              data: { "turbo-method": :delete },

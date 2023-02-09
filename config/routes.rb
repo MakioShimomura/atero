@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   delete "/logout",  to: "sessions#destroy"
   get    "/choices", to: "choices#index"
   resources :games, only: [:new, :index, :create, :edit, :update, :show]
+  resources :questions, only: [:new, :create, :destroy, :index]
   resources :choices, only:[:index, :create, :destroy]
   resources :matches, only: [:create]
   get 'play/:match_id/:game_id', to: 'matches#play', as: :match_play

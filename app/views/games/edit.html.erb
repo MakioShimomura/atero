@@ -1,21 +1,16 @@
 <div class="row">
   <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
-    <div id="judgment" class="question-judgment"></div>
-    <div class="z-depth-1 question-image">
-    <% if @question.images.attached? %>
-      <% @question.images.each_with_index do |image, i| %>
-        <%= image_tag image.variant(:display).processed,
-                      id: "question-image-#{i}",
-                      class: "#{i == 0 ? 'active' : ''}" %>
-      <% end %>
-    <% end %>
+    <div id="js-judgment" class="question-judgment"></div>
+    <div class="z-depth-1 question-image-frame">
+      <%= image_tag @question.image.variant(:display).processed, class: "question-image",
+                                                                 id: "js-question-image" %>
     </div>
     <p>Q.<%= session[:question_num] %> / <%= Game.find(params[:id]).question_quantities %>問中</p>
 
       <%= form_with scope: :question,
                     url: game_path(params[:id]),
                     method: :patch,
-                    html: {name: "myform"} do |f| %>
+                    html: {name: "answer_form"} do |f| %>
         <% @choices.each do |choice| %>
           <div>
             <label>
