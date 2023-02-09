@@ -5,23 +5,21 @@
       <%= image_tag @question.image.variant(:display).processed, class: "question-image",
                                                                  id: "js-question-image" %>
     </div>
-    <p>Q.<%= session[:question_num] %> / <%= Game.find(params[:id]).question_quantities %>問中</p>
-
-      <%= form_with scope: :question,
-                    url: game_path(params[:id]),
-                    method: :patch,
-                    html: {name: "answer_form"} do |f| %>
-        <% @choices.each do |choice| %>
-          <div>
-            <label>
-              <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
-              <div class="waves-effect waves-light btn full mb-1">
-                <%= choice[:text] %>
-              </div>
-            </label>
-          </div>
-        <% end %>
+    <p>Q.<%= session[:question_num] %> / <%= @game.question_quantities %>問中</p>
+    <%= form_with scope: :question,
+                  url: game_path(params[:id]),
+                  method: :patch,
+                  html: {name: "answer_form"} do |f| %>
+      <% @choices.each do |choice| %>
+        <div>
+          <label>
+            <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
+            <div class="waves-effect waves-light btn full mb-1">
+              <%= choice[:text] %>
+            </div>
+          </label>
+        </div>
       <% end %>
-    </div>
+    <% end %>
   </div>
 </div>
