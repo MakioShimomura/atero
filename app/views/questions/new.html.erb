@@ -9,22 +9,22 @@
   </div>
 <% end %>
 
+<% if @labels %>
+  <% @labels.each do |label| %>
+    <button onclick="document.getElementById('question_choice_text').value = event.target.innerText">
+      <%= label %>
+    </button>
+  <% end %>
+<% else %>
+  <p>なし</p>
+<% end %>
+
 <%= form_with(url: questions_path, scope: :question) do |f| %>
   <div>
     <%= f.label :正解 %>
     <%= f.text_field :choice_text %>
   </div>
-  <div>
-    <% if @labels %>
-      <button onclick="handleClick()"><%= @labels[0] %></button>
-      <p><%= @labels[0] %></p>
-      <p><%= @labels[1] %></p>
-      <p><%= @labels[2] %></p>
-    <% else %>
-      <p>なし</p>
-    <% end %>
-  </div>
-  
+
   <div>
     <%= f.submit "作成" %>
   </div>
