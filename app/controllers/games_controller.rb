@@ -31,6 +31,7 @@ class GamesController < ApplicationController
   end
 
   def edit
+    @game = Game.find(params[:id])
     @question = Question.order("RANDOM()").limit(1)[0]
     correct_choice = Choice.find(@question.choice_id)
     wrong_choices = Choice.where.not(id: correct_choice.id).order("RANDOM()").limit(3)

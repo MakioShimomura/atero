@@ -1,11 +1,22 @@
 <div class="row">
   <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
     <div id="js-judgment" class="question-judgment"></div>
-    <div class="z-depth-1 question-image-frame">
+    <div class="z-depth-1 question-image-frame mb-0">
       <%= image_tag @question.image.variant(:display).processed, class: "question-image",
                                                                  id: "js-question-image" %>
     </div>
-    <p>Q.<%= session[:question_num] %> / <%= @game.question_quantities %>問中</p>
+    <div class="question-card z-depth-1 mb-0">
+      <div class="question-name"><%= @game.name %></div>
+      <div class="question-progress">
+        <p class="number">
+          <span class="current"><%= session[:question_num] %></span>問目
+        </p>
+        <div class="progress">
+          <div class="determinate" style="width: <%= calc_question_progress(session[:question_num], @game.question_quantities) %>%"></div>
+        </div>
+        <div class="correct">(正解: <%= @game.correct_quantities %>)</div>
+      </div>
+    </div>
     <%= form_with scope: :question,
                   url: game_path(params[:id]),
                   method: :patch,
@@ -14,7 +25,7 @@
         <div>
           <label>
             <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
-            <div class="waves-effect waves-light btn full mb-1">
+            <div class="waves-effect waves-light btn full mb-0">
               <%= choice[:text] %>
             </div>
           </label>
