@@ -1,7 +1,7 @@
+<%= render 'layouts/flash_messages' %>
 <div class="row z-depth-1 start-card">
   <p class="bold admin-title">選択肢一覧</p>
   <div class="col s12 m8 l6 offset-m2 offset-l3 mb-5">
-    <%= render 'layouts/flash_messages' %>
     <%= form_with(model: @choice) do |f| %>
       <div class="mb-0">
         <%= f.label :選択肢の追加 %>
