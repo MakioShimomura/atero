@@ -12,9 +12,13 @@
 
   <body>
     <main class="container">
-      <div class="logo"><%= image_tag 'logo.png' %></div>
+      <div class="logo">
+        <%= link_to root_path do %>
+          <%= image_tag 'logo.png' %>
+        <% end %>
+      </div>
       <%= yield %>
-      <%= debug(params) if Rails.env.development? %>
+      <%#= debug(params) if Rails.env.development? %>
     </main>
   </body>
 </html>

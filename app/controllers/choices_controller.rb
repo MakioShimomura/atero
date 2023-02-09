@@ -2,7 +2,7 @@ class ChoicesController < ApplicationController
   before_action :admin,     only: [:index, :create, :destroy]
   def index
     @choice = Choice.new
-    @choices = Choice.all
+    @choices = Choice.order("created_at desc")
   end
   
   def create
