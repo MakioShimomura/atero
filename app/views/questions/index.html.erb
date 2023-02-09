@@ -6,7 +6,8 @@
   </div>
   <div class="col s12">
     <ul class="collection">
-      <% @questions.reverse_each do |question|%>
+      <%= paginate @questions %>
+      <% @questions.each do |question|%>
         <li class="collection-item">
           <div class="admin-question-content">
             <div class="admin-question-image-frame">

@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   # before_action :require_img, only: :create
 
   def index
-    @questions = Question.all
+    @questions = Question.all.order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def new

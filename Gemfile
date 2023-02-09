@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rails",           "7.0.4"
 gem "bcrypt",          "3.1.18"
 gem "faker",           "2.21.0"
+gem 'kaminari'
 gem "image_processing", "1.12.2"
 gem 'materialize-sass', "1.0.0"
 gem 'material_icons',   "4.0.0"
