@@ -30,7 +30,8 @@
         <div class="correct">(正解: <%= @game.correct_quantities %>)</div>
       </div>
     </div>
-    <div class="question-card z-depth-1 mb-0">
+    <div id="js-opponent-progress">
+      <div class="question-card z-depth-1 mb-0">
       <div class="question-name"><%= @opponent_game.name %></div>
       <div class="question-progress">
         <p class="number">
@@ -41,6 +42,7 @@
         </div>
         <div class="correct">(正解: <%= @opponent_game.correct_quantities %>)</div>
       </div>
+    </div>
     </div>
     <%= form_with scope: :question,
                   url: match_update_path(params[:match_id], params[:game_id]),
