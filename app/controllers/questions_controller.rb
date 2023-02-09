@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
     question = @choice.questions.build#(question_params)
     # question.image.attach(params[:question][:image])
     img = File.open(image)
-    question.image.attach(io: img, filename:'tmp.jpg' )
+    question.image.attach(io: img, filename: file_name(image) )
 
     # ---------仮にここで削除
     del_images
@@ -56,36 +56,49 @@ class QuestionsController < ApplicationController
     upload_file = params[:upload_file]
 
     if upload_file.present?
-      # 一度だけ使える.readでファイルを取得
-      tmp_img = upload_file.read
-      # ファイルネームを取得
-      file_name = upload_file.original_filename
-      # アップロード先のディレクトリ
-      upload_dir = Rails.root.join("app", "assets","images","predict")
       # アップロードファイルのフルパス
-      upload_file_path = upload_dir + file_name
+      upload_path = path + file_name(upload_file)
       # アップロードファイルの書き込み
-      File.binwrite(upload_file_path, tmp_img)
+      save_to_tmp(upload_file,upload_path)
     end
     redirect_to questions_predict_path
   end
 
   private
+    # tmpへの一時保存
+    def save_to_tmp(image,path)
+      File.binwrite("#{path}*", File.read(image))
+    end
+
+    def file_name(image)
+      File.basename(image)
+    end
+
+    # 一時アップロード先のtmpパス
+    def path
+      path = "/tmp/quiz_tmp/"
+      FileUtils.mkdir_p(path) unless File.exist?(path)
+      path
+    end
+
+    # 画像ラベル取得API
     def get_labels
-      if Dir.glob("#{Rails.root}/app/assets/images/predict/**/*").any?
+      if !image.nil?
         eng_labels = Vision.get_labels(image)
         @labels = Deepl.kana(eng_labels)
         # @labels = ["ア","カ","サ"]
       end
     end
 
+    # 一時アップロード先のファイル削除
     def del_images
-       require 'fileutils'
-       FileUtils.rm_rf("#{Rails.root}/app/assets/images/predict/.")
+      FileUtils.rm_rf(Dir.glob("#{path}*")) if File.exist?(path)
     end
 
+    # 一時アップロード先の最新ファイル
     def image
-      Dir.glob("#{Rails.root}/app/assets/images/predict/**/*").first
+      files = Dir.glob("#{path}*")
+      files.sort_by { |f| File.ctime(f) }.last
     end
 
     def choice_params
