@@ -17,6 +17,8 @@ module QuizApp
     Faker::Config.locale = :ja
 
     # config.paths.add 'lib', eager_load: true # API用に追加
+    
+    # 参考: https://qiita.com/necojackarc/items/fb76352dbea5bdd83366
     config.autoload_paths += %W(#{config.root}/lib)
 
     # Configuration for the application, engines, and railties goes here.
