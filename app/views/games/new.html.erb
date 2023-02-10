@@ -27,12 +27,14 @@
       <button type='submit' class="waves-effect waves-light btn-large full">1人用モード</button>
     </div>
   <% end %>
-  <%= form_with(url: matches_path, method: :post, scope: :match, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
-    <%= f.hidden_field :name, value: @game.name %>
+  <div class="col s12 m6 l4 offset-m3 offset-l4">
+    <%= form_with(url: matches_path, method: :post, scope: :match, html: {name: "match_form"}) do |f| %>
+      <%= f.hidden_field :name, value: @game.name %>
+    <% end %>
     <div class="center-align">
-      <button type='submit' class="waves-effect waves-light btn-large full">対戦モード</button>
+      <button id='js-match-btn' class="waves-effect waves-light btn-large full">対戦モード</button>
     </div>
-  <% end %>
+  </div>
 </div>
 <div class="z-depth-1 rank-card">
   <p class="bold rank-title">ランキング</p>

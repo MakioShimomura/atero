@@ -13,6 +13,7 @@ class MatchesController < ApplicationController
       match.update(status: 1, start_at: Time.now)
     end
 
+    cookies.permanent[:game_name] = game.name
     redirect_to match_play_path(match.id, game.id)
   end
   
