@@ -1,29 +1,25 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem "rails",           "7.0.4"
-gem "bcrypt",          "3.1.18"
-gem "faker",           "2.21.0"
-gem 'kaminari'
+gem "rails",            "7.0.4"
+gem "bcrypt",           "3.1.18"
+gem "faker",            "2.21.0"
+gem 'kaminari',         "1.2.2"
 gem "image_processing", "1.12.2"
 gem 'materialize-sass', "1.0.0"
 gem 'material_icons',   "4.0.0"
-gem "sassc-rails",     "2.1.2"
-gem "sprockets-rails", "3.4.2"
-gem "importmap-rails", "1.1.0"
-gem "turbo-rails",     "1.1.1"
-gem "stimulus-rails",  "1.0.4"
-gem "jbuilder",        "2.11.5"
-gem "puma",            "5.6.4"
-gem "bootsnap",        "1.12.0", require: false
-gem "rmagick",         "5.1.0"
-gem "pg",              "1.3.5"
-gem 'dotenv-rails'
-
-# https://blog.to-ko-s.com/rails-api-get/
-gem 'httpclient'
-# 漢字カナ変換
-gem 'mechanize'
+gem "sassc-rails",      "2.1.2"
+gem "sprockets-rails",  "3.4.2"
+gem "importmap-rails",  "1.1.0"
+gem "turbo-rails",      "1.1.1"
+gem "stimulus-rails",   "1.0.4"
+gem "jbuilder",         "2.11.5"
+gem "puma",             "5.6.4"
+gem "bootsnap",         "1.12.0", require: false
+gem "pg",               "1.3.5"
+gem 'dotenv-rails',     "2.8.1"
+gem 'httpclient' # https://blog.to-ko-s.com/rails-api-get/
+gem 'mechanize'  # 漢字カナ変換
 
 group :development, :test do
   gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]

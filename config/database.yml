@@ -6,19 +6,13 @@ default: &default
 
 development:
   <<: *default
-  database: quiz_development
-  username: postgres
-  password: postgres
-  host: localhost
+  database: atero_development
 
 test:
   <<: *default
-  database: quiz_test
-  username: postgres
-  password: postgres
-  host: localhost
+  database: atero_test
 
 production:
   <<: *default
-  database: quiz_development
+  database: atero_production
   url: <%= ENV['DATABASE_URL'] %>

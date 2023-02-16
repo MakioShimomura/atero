@@ -3,14 +3,53 @@
 ## 画像クイズアプリ
 加工された画像をクイズ形式で出題するアプリです。
 
-## 環境構築
+## 環境構築(mac)
+```sh
+# リポジトリからプロジェクトをクローン
+$ git clone https://github.com/MakioShimomura/atero.git
+
+# Railsのgemをインストール
+$ sudo gem install rails
+
+# プロジェクトに移動
+$ cd quiz_app
+
+# homebrewの更新
+$ brew update
+
+# postgresql を起動
+$ brew services start postgresql@14
+
+# postgresql が起動していることを確認
+$ brew services list
+
+# Imagemagick をインストール
+$ brew install imagemagick
+
+# gemのインストール
+$ bundle install
+
+# database.ymlを読み込み，そのファイルに基づいてデータベースを作成
+$ rails db:create
+
+# マイグレート
+$ rails db:migrate
+
+# シードの実行
+$ rails db:seed
+```
+
+## 環境構築(linux)
 
 ```sh
 # リポジトリからプロジェクトをクローン
 git clone https://github.com/SonicGardenCamp/quiz_app.git
 
+# Railsのgemをインストール
+$ sudo gem install rails
+
 # プロジェクトに移動
-cd quiz_app
+$ cd quiz_app
 
 # パッケージ一覧を更新(パッケージのリポジトリから、パッケージの名前やバージョン、依存関係を取得し、有効でインストール可能なパッケージの一覧を更新)
 $ sudo apt update
@@ -23,9 +62,6 @@ $ sudo apt install libpq-dev
 
 # postgresqlのインストール
 $ sudo apt install postgresql
-
-# production のgemはインストールしないように設定
-bundle _2.3.14_ config set --local without 'production'
 
 # gemのインストール
 $ bundle _2.3.14_ install
