@@ -3,11 +3,6 @@ class GamesController < ApplicationController
   before_action :is_correct_game_id, only: :edit
 
   def show
-    if @game = Game.find_by( id: params[:id] )
-      reset_session
-    else
-      redirect_to root_path
-    end
   end
 
   def new
@@ -46,6 +41,7 @@ class GamesController < ApplicationController
     if game.current_question_num == game.question_quantities
       game.end_at = Time.now
       game.save
+      reset_session
       redirect_to game_path(game)
     else
       game.current_question_num += 1
