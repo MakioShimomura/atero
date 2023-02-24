@@ -7,7 +7,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    @game.name = cookies[:game_name] if cookies[:game_name]
+    @game.name = cookies[:nickname] if cookies[:nickname]
     @games = Game.rank_sorted
   end
 
@@ -15,7 +15,7 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     if @game.save
       reset_session
-      cookies.permanent[:game_name] = @game.name
+      cookies.permanent[:nickname] = @game.name
       session[:game_id] = @game.id
       redirect_to edit_game_path(@game.id)
     else
