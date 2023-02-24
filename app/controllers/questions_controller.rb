@@ -1,132 +1,75 @@
 class QuestionsController < ApplicationController
   before_action :require_admin, only: [:new, :create, :index, :destroy]
+  before_action :require_image, only: :choice_predict
   before_action :require_choice_text, only: :create
-  # before_action :require_img, only: :create
 
   def index
-    @questions = Question.all.order(created_at: :desc).page(params[:page]).per(20)
+    @questions = Question.order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def new
-    get_labels
+    if latest_tmp_image
+      @labels = Deepl.translation(Vision.get_image_data(latest_tmp_image))
+    end
+  end
+
+  def choice_predict
+    upload_file = params[:upload_file]
+    if upload_file.present?
+      FileUtils.mkdir_p(TMP_PATH)
+      File.binwrite(TMP_PATH + upload_file.original_filename, File.read(upload_file))
+    end
+    redirect_to new_question_path
   end
 
   def create
     @choice = Choice.find_by(text: choice_params[:choice_text])
-
-    # もし、@choice（正解テキスト）の中にテキストがあれば、それを使う。
-    if @choice
-      @choice
-    else
-    # 無ければ、新しく作成する
-      @choice = Choice.new(text: choice_params[:choice_text])
-    end
-    question = @choice.questions.build#(question_params)
-    # question.image.attach(params[:question][:image])
-    img = File.open(image)
-    question.image.attach(io: img, filename: file_name(image) )
-
-    # ---------仮にここで削除
-    del_images
-    # -------------
-
+    @choice = @choice ? @choice : Choice.new(text: choice_params[:choice_text])
+    question = @choice.questions.build
+    question.image.attach(io: File.open(latest_tmp_image), filename: File.basename(latest_tmp_image))
     if question.save
-      flash[:success] = "問題を作成しました"
-      redirect_to questions_path
+      FileUtils.rm_rf(Dir.glob("#{TMP_PATH}*"))
+      redirect_to questions_path, flash: { success: '問題を作成しました' }
     else
-      flash.now[:danger] = "問題の画像/解答を入力してください"
+      flash.now[:danger] = "問題の作成に失敗しました"
       render 'new', status: :unprocessable_entity
     end
   end
 
-
   def destroy
-    question = Question.find(params[:id]).destroy
-    if question.destroyed?
-      flash[:success] = "問題を削除しました"
-      redirect_to question_url, status: :see_other
+    question = Question.find(params[:id])
+    if question.destroy
+      redirect_to question_url, flash: { success: '問題を削除しました' }
     else
-      flash[:danger] = "問題を削除できませんでした"
-      redirect_to question_url, status: :see_other
+      redirect_to question_url, flash: { danger: '問題の削除に失敗しました' }
     end
-  end
-
-  def predict
-    # アップロードファイル <- file_field
-    upload_file = params[:upload_file]
-
-    if upload_file.present?
-      # アップロードファイルのフルパス
-      upload_path = path + file_name(upload_file)
-      # アップロードファイルの書き込み
-      save_to_tmp(upload_file,upload_path)
-    end
-    redirect_to questions_predict_path
   end
 
   private
-    # tmpへの一時保存
-    def save_to_tmp(image,path)
-      File.binwrite("#{path}*", File.read(image))
-    end
-
-    def file_name(image)
-      File.basename(image)
-    end
-
-    # 一時アップロード先のtmpパス
-    def path
-      path = "/tmp/quiz_tmp/"
-      FileUtils.mkdir_p(path) unless File.exist?(path)
-      path
-    end
-
-    # 画像ラベル取得API
-    def get_labels
-      if !image.nil?
-        eng_labels = Vision.get_labels(image)
-        @labels = Deepl.kana(eng_labels)
-        # @labels = ["ア","カ","サ"]
-      end
-    end
-
-    # 一時アップロード先のファイル削除
-    def del_images
-      FileUtils.rm_rf(Dir.glob("#{path}*")) if File.exist?(path)
-    end
-
-    # 一時アップロード先の最新ファイル
-    def image
-      files = Dir.glob("#{path}*")
+    def latest_tmp_image
+      FileUtils.mkdir_p(TMP_PATH)
+      files = Dir.glob("#{TMP_PATH}*")
       files.sort_by { |f| File.ctime(f) }.last
     end
 
-    def choice_params
-      params.require(:question).permit(:choice_text)
-    end
-
-    def question_params
-      params.require(:question).permit(:image)
-    end
-
-    # adminにログインしていなければ、ログイン画面へ
     def require_admin
       redirect_to login_path if !logged_in?
     end
 
-    # 解答は入力されていなければならない
-    def require_choice_text
-      if choice_params[:choice_text].empty?
-        flash.now[:danger] = "問題の画像/解答を入力してください"
+    def require_image
+      if params[:upload_file].nil?
+        flash.now[:danger] = "画像をアップロードしてください"
         return render 'new', status: :see_other
       end
     end
 
-    # 画像は選択されていなければならない
-    def require_img
-      if params[:question][:image].nil?
-        flash.now[:danger] = "問題の画像/解答を入力してください"
-        return render 'new', status: :see_other
+    def require_choice_text
+      if choice_params[:choice_text].empty?
+        redirect_to new_question_path, flash: { danger: '正答選択肢を入力してください' }
       end
+    end
+
+    def choice_params
+      params.require(:question).permit(:choice_text)
     end
 end

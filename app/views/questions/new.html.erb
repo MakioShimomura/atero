@@ -5,7 +5,7 @@
     <%= link_to "問題一覧", questions_path, class: 'waves-effect waves-light btn' %>
   </div>
   <div class="col s12">
-    <%= form_with(url:questions_predict_path) do |f| %>
+    <%= form_with(url: questions_choice_predict_path) do |f| %>
        <div class="file-field input-field">
         <div class="btn">
           <span>File</span>
@@ -17,7 +17,7 @@
       </div>
       <button class="btn">画像から予測</button>
     <% end %>
-    
+
     <% if @labels %>
       <div class="admin-question-predict">
         <% @labels.each do |label| %>

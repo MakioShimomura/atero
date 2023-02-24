@@ -4,12 +4,12 @@ require 'net/https'
 
 module Vision
   class << self
-    def get_labels(image_file)
+    def get_image_data(image_file)
       # APIのURL作成
       api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
 
       # 画像をbase64にエンコード
-      base64_image = Base64.strict_encode64(File.read(image_file))
+      base64_image = Base64.encode64(open(image_file).read)
 
       # APIリクエスト用のJSONパラメータ
       params = {
@@ -34,12 +34,7 @@ module Vision
       response = https.request(request, params)
 
       # APIレスポンス出力
-      # res =  #Deeplとつなげるとエラーになる
       JSON.parse(response.body)['responses'][0]['labelAnnotations'].pluck('description').take(3)
-
-      # # カタカナ出力
-      # Deepl.kana(res) #Deeplとつなげるとエラーになる
-
     end
   end
 end

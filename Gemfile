@@ -18,8 +18,7 @@ gem "puma",             "5.6.4"
 gem "bootsnap",         "1.12.0", require: false
 gem "pg",               "1.3.5"
 gem 'dotenv-rails',     "2.8.1"
-gem 'httpclient' # https://blog.to-ko-s.com/rails-api-get/
-gem 'mechanize'  # 漢字カナ変換
+gem 'httpclient',       "2.8.3"
 
 group :development, :test do
   gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]
@@ -44,6 +43,3 @@ group :production do
   gem "aws-sdk-s3", "1.114.0", require: false
   gem "redis", "~> 4.0"
 end
-
-# Windows ではタイムゾーン情報用の tzinfo-data gem を含める必要があります
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
