@@ -1,6 +1,5 @@
 class GamesController < ApplicationController
-  before_action :is_session_game_id, only: :edit
-  before_action :is_correct_game_id, only: :edit
+  before_action :check_game_id_in_session, only: :edit
 
   def show
     @game = Game.find(params[:id]).decorate
@@ -53,11 +52,9 @@ class GamesController < ApplicationController
 
   private
 
-    def is_session_game_id
-      redirect_to root_path if session[:game_id].nil?
-    end
-
-    def is_correct_game_id
-      redirect_to root_path if session[:game_id] != params[:id].to_i
+    def check_game_id_in_session
+      if session[:game_id].nil? && session[:game_id] != params[:id].to_i
+        redirect_to root_path
+      end
     end
 end
