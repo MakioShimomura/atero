@@ -19,6 +19,7 @@ gem "bootsnap",         "1.12.0", require: false
 gem "pg",               "1.3.5"
 gem 'dotenv-rails',     "2.8.1"
 gem 'httpclient',       "2.8.3"
+gem 'draper',           "4.0.2"
 
 group :development, :test do
   gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]

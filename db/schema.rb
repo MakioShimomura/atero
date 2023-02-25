@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_09_164826) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_24_131215) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,10 +43,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_164826) do
   end
 
   create_table "admins", force: :cascade do |t|
-    t.string "email"
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password_digest"
+    t.string "password_digest", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
   end
 
   create_table "choices", force: :cascade do |t|
@@ -56,8 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_164826) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.string "name", default: "名無し"
-    t.integer "question_quantities", default: 10
+    t.string "name"
+    t.integer "question_quantities"
     t.integer "correct_quantities", default: 0
     t.datetime "end_at"
     t.datetime "created_at", null: false
@@ -65,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_164826) do
     t.boolean "is_match", default: false, null: false
     t.bigint "match_id"
     t.integer "current_question_num", default: 1, null: false
+    t.datetime "start_at", null: false
     t.index ["match_id"], name: "index_games_on_match_id"
   end
 

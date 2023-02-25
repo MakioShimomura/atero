@@ -3,17 +3,15 @@ class MatchesController < ApplicationController
 
   def create
     match = Match.where(status: 0).last
-    
     if match.nil?
       match = Match.create()
-      game = match.games.create(game_params)
     else
-      # この順番でないとMatchBroadcastJobにてtransactionのエラーが起こる
-      game = match.games.create(game_params)
-      match.update(status: 1, start_at: Time.now)
+      match.update(status: 1, start_at: Time.zone.now)
     end
-
-    cookies.permanent[:game_name] = game.name
+    game = match.games.create(name: params[:match][:name],
+                              start_at: Time.zone.now,
+                              question_quantities: 5)
+    cookies.permanent[:nickname] = game.name
     redirect_to match_play_path(match.id, game.id)
   end
   
@@ -30,7 +28,7 @@ class MatchesController < ApplicationController
     @game.correct_quantities += 1 if params[:question][:choice] == "true"
 
     if @game.current_question_num >= @game.question_quantities
-      @game.end_at = Time.now
+      @game.end_at = Time.zone.now
       @match.update(status: 2) if @opponent_game.end_at
     else
       @game.current_question_num += 1
@@ -42,12 +40,9 @@ class MatchesController < ApplicationController
   private
   
     def setting_match
-      @match = Match.find(params[:match_id])
-      @game = @match.games.find(params[:game_id])
+      @match = Match.find(params[:match_id]).decorate
+      @game = @match.games.find(params[:game_id]).decorate
       @opponent_game = @match.games.where.not(id: params[:game_id]).first
-    end
-  
-    def game_params
-      params.require(:match).permit(:name)
+      @opponent_game = @opponent_game.decorate if @opponent_game
     end
 end

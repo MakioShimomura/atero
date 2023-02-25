@@ -5,7 +5,6 @@ class SessionsController < ApplicationController
   def create
     admin = Admin.find_by(email: params[:session][:email].downcase)
     if admin && admin.authenticate(params[:session][:password])
-      reset_session
       log_in admin
       flash.now[:success] = '管理者としてログインしました'
       redirect_to root_path

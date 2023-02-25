@@ -4,11 +4,12 @@ Admin.create!(email: "sonic_garden@camp.jp",
               
 # 回答済みのユーザー
 base_at = Time.zone.now + 30.second
-names = ["みっちゃん", "ふく", "うの", "まっきー"]
+names = ["テスト1", "テスト2", "テスト3"]
 names.each.with_index(1) do |name, i|
   Game.create!(name: name,
                question_quantities: 4,
                correct_quantities: 2,
+               start_at: base_at,
                end_at: base_at + i.second)
 end
 # 同率のユーザー
@@ -16,12 +17,14 @@ end
   Game.create!(name: "同率くん",
              question_quantities: 4,
              correct_quantities: 2,
+             start_at: base_at,
              end_at: base_at + 10.second)
 end
 # 最下位のユーザー
 Game.create!(name: "最下位くん",
              question_quantities: 4,
              correct_quantities: 0,
+             start_at: base_at,
              end_at: base_at + 10.second)
 
 # 正答からchoice(選択肢)を作成

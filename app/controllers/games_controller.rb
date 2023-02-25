@@ -3,23 +3,24 @@ class GamesController < ApplicationController
   before_action :is_correct_game_id, only: :edit
 
   def show
+    @game = Game.find(params[:id]).decorate
   end
 
   def new
-    @game = Game.new
-    @game.name = cookies[:nickname] if cookies[:nickname]
-    @games = Game.rank_sorted
+    @game = Game.new(name: cookies[:nickname] || '名無し')
+    @games = Game.rank_sorted.limit(20)
   end
 
   def create
-    @game = Game.new(game_params)
+    @game = Game.new(name: params[:game][:name],
+                     start_at: Time.zone.now,
+                     question_quantities: 5)
     if @game.save
-      reset_session
       cookies.permanent[:nickname] = @game.name
       session[:game_id] = @game.id
       redirect_to edit_game_path(@game.id)
     else
-      @games = Game.rank_sorted
+      @games = Game.rank_sorted.limit(20)
       flash.now[:danger] = '名前が保存できませんでした（12文字以内）'
       render 'new', status: :unprocessable_entity
     end
@@ -38,22 +39,19 @@ class GamesController < ApplicationController
   def update
     game = Game.find(params[:id])
     game.correct_quantities += 1 if params[:question][:choice] == "true"
-    if game.current_question_num == game.question_quantities
-      game.end_at = Time.now
+    if game.current_question_num >= game.question_quantities
+      game.end_at = Time.zone.now
       game.save
-      reset_session
+      session[:game_id] = nil
       redirect_to game_path(game)
     else
       game.current_question_num += 1
       game.save
-      redirect_to edit_game_path
+      redirect_to edit_game_path(game.id)
     end
   end
 
   private
-    def game_params
-      params.require(:game).permit(:name)
-    end
 
     def is_session_game_id
       redirect_to root_path if session[:game_id].nil?
