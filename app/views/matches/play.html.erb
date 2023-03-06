@@ -17,12 +17,7 @@
     <div id="js-opponent-progress">
       <%= render 'games/progress', game: @opponent_game %> 
     </div>
-    <%= form_with scope: :question,
-                  url: match_update_path(params[:match_id], params[:game_id]),
-                  method: :patch,
-                  html: {name: "answer_form"} do |f| %>
-      <%= render 'games/choices' %> 
-    <% end %>
+    <%= render 'games/answer_form' %>
   </div>
 </div>
 <% end %>

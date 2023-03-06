@@ -2,11 +2,6 @@
   <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
     <%= render 'games/quiz_image' %> 
     <%= render 'games/progress', game: @game %> 
-    <%= form_with scope: :question,
-                  url: game_path(params[:id]),
-                  method: :patch,
-                  html: {name: "answer_form"} do |f| %>
-      <%= render 'games/choices' %> 
-    <% end %>
+    <%= render 'games/answer_form' %>
   </div>
 </div>

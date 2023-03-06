@@ -1,0 +1,14 @@
+<%= form_with scope: :question,
+              url: params[:match_id].nil? ? game_path(params[:id])
+                                          : match_update_path(params[:match_id], params[:game_id]),
+              method: :patch,
+              html: {name: "answer_form"} do |f| %>
+  <% @choices.each do |choice| %>
+  <label>
+    <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
+    <div class="waves-effect waves-light btn full mb-0">
+      <%= choice[:text] %>
+    </div>
+  </label>
+  <% end %>
+<% end %>
