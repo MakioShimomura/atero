@@ -12,12 +12,7 @@
 <% if @match.status == 1 && @game.end_at.nil? %>
 <div id="js-play-screen-2" class="row">
   <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
-    <div id="js-judgment-correct" class="question-judgment correct"></div>
-    <div id="js-judgment-wrong" class="question-judgment wrong"></div>
-    <div class="z-depth-1 question-image-frame mb-0">
-      <%= image_tag @question.image.variant(:display).processed, class: "question-image",
-                                                                 id: "js-question-image" %>
-    </div>
+    <%= render 'games/quiz_image' %> 
     <%= render 'games/progress', game: @game %> 
     <div id="js-opponent-progress">
       <%= render 'games/progress', game: @opponent_game %> 
@@ -26,16 +21,7 @@
                   url: match_update_path(params[:match_id], params[:game_id]),
                   method: :patch,
                   html: {name: "answer_form"} do |f| %>
-      <% @choices.each do |choice| %>
-        <div>
-          <label>
-            <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
-            <div class="waves-effect waves-light btn full mb-0">
-              <%= choice[:text] %>
-            </div>
-          </label>
-        </div>
-      <% end %>
+      <%= render 'games/choices' %> 
     <% end %>
   </div>
 </div>

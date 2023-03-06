@@ -1,0 +1,10 @@
+<% @choices.each do |choice| %>
+  <div>
+    <label>
+      <%= f.radio_button :choice, choice[:is_correct], class: "with-gap" %>
+      <div class="waves-effect waves-light btn full mb-0">
+        <%= choice[:text] %>
+      </div>
+    </label>
+  </div>
+<% end %>

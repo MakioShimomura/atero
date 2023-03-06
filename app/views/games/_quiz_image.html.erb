@@ -1,0 +1,6 @@
+<div id="js-judgment-correct" class="question-judgment correct"></div>
+<div id="js-judgment-wrong" class="question-judgment wrong"></div>
+<div class="z-depth-1 question-image-frame mb-0">
+  <%= image_tag @question.image.variant(:display).processed, class: "question-image",
+                                                              id: "js-question-image" %>
+</div>
