@@ -9,44 +9,34 @@
   </div>
 </div>
   
-<% if @match.status == 1 && @game.end_at.nil? %>
-<div id="js-play-screen-2" class="row">
-  <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
-    <%= render 'games/quiz_image' %> 
-    <%= render 'games/progress', game: @game %> 
-    <div id="js-opponent-progress">
-      <%= render 'games/progress', game: @opponent_game %> 
+<% if @match.status == 1 %>
+  <div id="js-play-screen-2" class="row <%= @game.end_at.nil? ? '' : 'hide' %>">
+    <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
+      <%= render 'games/quiz_image' %> 
+      <%= render 'games/progress', game: @game %> 
+      <div id="js-opponent-progress">
+        <%= render 'games/progress', game: @opponent_game %> 
+      </div>
+      <%= render 'games/answer_form' %>
     </div>
-    <%= render 'games/answer_form' %>
   </div>
-</div>
-<% end %>
 
-<div id="js-play-screen-3" class="<%= @match.status == 1 && @game.end_at ? '' : 'hide' %>">
-  <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
-    <p class="bold">対戦相手の回答待ち...</p>
-    <div class="progress">
-      <div class="indeterminate"></div>
+  <div id="js-play-screen-3" class="<%= @game.end_at ? '' : 'hide' %>">
+    <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
+      <p class="bold">対戦相手の回答待ち...</p>
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <% if @match.status == 2 %>
   <div class="row">
     <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
       <%= @match.victory_judgment(@game) %>
-      <div>
-        <span class="bold"><%= @game.name %></span>さんの成績は...
-      </div>
-      <div class="result-text mb-1">
-        正解率: <%= @game.correct_rate %> (<%= @game.correct_percentage %>)
-      </div>
-      <div>
-        <span class="bold"><%= @opponent_game.name %></span>さんの成績は...
-      </div>
-      <div class="result-text mb-2">
-        正解率: <%= @opponent_game.correct_rate %> (<%= @opponent_game.correct_percentage %>)
-      </div>
+      <%= render 'games/result', game: @game %> 
+      <%= render 'games/result', game: @opponent_game %> 
       <%= link_to "Top画面へ戻る", root_path, class: "waves-effect waves-light btn-large" %>
     </div>
   </div>
