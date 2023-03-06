@@ -1,6 +1,5 @@
 document.addEventListener("turbo:load", function() {
   const judgment_correct = document.getElementById('js-judgment-correct')
-  
   if (judgment_correct !== null) {
     const judgment_wrong = document.getElementById('js-judgment-wrong')
     const choices_btn = document.getElementsByName('question[choice]')
@@ -21,7 +20,6 @@ document.addEventListener("turbo:load", function() {
     }
   }
   
-
   const match_btn = document.getElementById('js-match-btn')
   if (match_btn !== null) {
     match_btn.addEventListener('click', () => {

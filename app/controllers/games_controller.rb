@@ -7,7 +7,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new(name: cookies[:nickname] || '名無し')
-    @games = Game.rank_sorted.limit(20)
+    @games = Game.rank_sorted.decorate.limit(20)
   end
 
   def create
@@ -26,7 +26,7 @@ class GamesController < ApplicationController
   end
 
   def edit
-    @game = Game.find(params[:id])
+    @game = Game.find(params[:id]).decorate
     @question = Question.order("RANDOM()").limit(1)[0]
     correct_choice = Choice.find(@question.choice_id)
     wrong_choices = Choice.where.not(id: correct_choice.id).order("RANDOM()").limit(3)

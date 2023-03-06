@@ -53,9 +53,9 @@
       <tr>
         <td><%= game.rank %></td>
         <td><%= game.name %></td>
-        <td><%= game.correct_rate %>%</td>
+        <td><%= game.correct_percentage %></td>
         <td><%= game.answer_time.floor() %>秒</td>
-        <td class="end-at"><%= display_end_at(game.end_at) %></td>
+        <td class="end-at"><%= game.formatted_end_at %></td>
       </tr>
       <% end %>
     </tbody>

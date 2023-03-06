@@ -5,7 +5,7 @@ class GameBroadcastJob < ApplicationJob
     if game.match
       MatchChannel.broadcast_to(game.match, { change_status: false,
                                               game_id: game.id,
-                                              progress: render_progress(game) } )
+                                              progress: render_progress(game.decorate) } )
     end
   end
   

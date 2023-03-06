@@ -18,6 +18,7 @@ document.addEventListener("turbo:load", () => {
       },
     
       received(data) {
+        console.log(data)
         // MatchChannelのブロードキャストを受け取ったらリロードする
         if (data['change_status']) {
           location.reload(true)

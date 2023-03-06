@@ -8,4 +8,13 @@ class GameDecorator < ApplicationDecorator
   def correct_percentage
     "#{object.correct_quantities * 100 / object.question_quantities}%"
   end
+
+  def formatted_end_at
+    I18n.localize(object.end_at).gsub(/ /, '<br>').html_safe
+  end
+
+  def progress
+    object.current_question_num  * 100 / object.question_quantities
+  end
+
 end

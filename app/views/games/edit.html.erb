@@ -13,7 +13,7 @@
           <span class="current"><%= @game.current_question_num %></span>問目
         </p>
         <div class="progress">
-          <div class="determinate" style="width: <%= calc_question_progress(@game.current_question_num, @game.question_quantities) %>%"></div>
+          <div class="determinate" style="width: <%= @game.progress %>%"></div>
         </div>
         <div class="correct">(正解: <%= @game.correct_quantities %>)</div>
       </div>
