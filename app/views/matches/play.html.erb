@@ -18,31 +18,9 @@
       <%= image_tag @question.image.variant(:display).processed, class: "question-image",
                                                                  id: "js-question-image" %>
     </div>
-    <div class="question-card z-depth-1 mb-0">
-      <div class="question-name"><%= @game.name %></div>
-      <div class="question-progress">
-        <p class="number">
-          <span class="current"><%= @game.current_question_num %></span>問目
-        </p>
-        <div class="progress">
-          <div class="determinate" style="width: <%= @game.progress %>%"></div>
-        </div>
-        <div class="correct">(正解: <%= @game.correct_quantities %>)</div>
-      </div>
-    </div>
+    <%= render 'games/progress', game: @game %> 
     <div id="js-opponent-progress">
-      <div class="question-card z-depth-1 mb-0">
-      <div class="question-name"><%= @opponent_game.name %></div>
-      <div class="question-progress">
-        <p class="number">
-          <span class="current"><%= @opponent_game.current_question_num %></span>問目
-        </p>
-        <div class="progress">
-          <div class="determinate" style="width: <%= @opponent_game.progress %>%"></div>
-        </div>
-        <div class="correct">(正解: <%= @opponent_game.correct_quantities %>)</div>
-      </div>
-    </div>
+      <%= render 'games/progress', game: @opponent_game %> 
     </div>
     <%= form_with scope: :question,
                   url: match_update_path(params[:match_id], params[:game_id]),

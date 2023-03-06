@@ -12,6 +12,6 @@ class GameBroadcastJob < ApplicationJob
   private
   
     def render_progress(game)
-      ApplicationController.renderer.render(partial: 'matches/progress', locals: { game: game })
+      ApplicationController.renderer.render(partial: 'games/progress', locals: { game: game })
     end
 end
