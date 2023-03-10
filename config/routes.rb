@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post   "/login",   to: "sessions#create"
   delete "/logout",  to: "sessions#destroy"
   resources :games, only: %i[new index create edit update show]
-  resources :questions, only: %i[index new create destroy]
+  resources :questions, only: %i[index create destroy]
   post 'questions/choice_predict', :controller => 'questions', :action => 'choice_predict'
   resources :choices, only: %i[index create destroy]
   resources :matches, only: %i[create]

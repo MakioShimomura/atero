@@ -53,9 +53,10 @@ document.addEventListener("turbo:load", function() {
           words.forEach(word => {
             const element = document.createElement('button');
             element.className = 'btn';
+            element.setAttribute('type', 'button');
             element.innerText = word;
             element.onclick = (event) => {
-              document.getElementById('question_choice_text').value = event.target.innerText
+              document.getElementById('js-choice-text').value = event.target.innerText
             };
             image_label_detection.appendChild(element);
           })

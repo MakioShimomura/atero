@@ -1,8 +1,8 @@
 <%= render 'layouts/flash_messages' %>
+<%= render 'new' %>
 <div class="row z-depth-1 start-card">
   <div class="admin-question-title-wrap mb-1">
     <p class="bold admin-title">問題一覧</p>
-    <%= link_to "問題を作成", new_question_path, class: 'waves-effect waves-light btn' %>
   </div>
   <div class="col s12">
     <%= paginate @questions %>
@@ -11,7 +11,7 @@
         <li class="collection-item">
           <div class="admin-question-content">
             <div class="admin-question-image-frame">
-              <%= image_tag question.image.variant(:display), class: 'admin-question-image' if question.image.attached? %>
+              <%= image_tag question.image.variant(:display), class: 'admin-question-image' %>
             </div>
             <span class="bold"><%= question.choice.text %></span>
           </div>

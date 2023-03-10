@@ -1,11 +1,10 @@
-<%= render 'layouts/flash_messages' %>
 <div class="row z-depth-1 start-card">
   <div class="admin-question-title-wrap mb-1">
     <p class="bold admin-title">問題作成</p>
   </div>
   <div class="col s12">
 
-    <%= form_with(url: questions_path, scope: :question) do |f| %>
+    <%= form_with(url: questions_path) do |f| %>
 
       <div class="file-field input-field">
         <div class="btn">
@@ -20,7 +19,7 @@
       <div class="admin-question-predict" id="js-label-detection"></div>
       <div>
         <%= f.label :正解選択肢 %>
-        <%= f.text_field :choice_text %>
+        <%= f.text_field :choice_text, id: 'js-choice-text' %>
       </div>
       <div>
         <%= f.submit "作成", class: 'btn' %>

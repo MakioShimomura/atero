@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   skip_forgery_protection only: :label_detection
-  before_action :require_admin, only: [:new, :create, :index, :destroy]
+  before_action :require_admin, only: [:create, :index, :destroy]
   before_action :require_image, only: :choice_predict
   before_action :require_choice_text, only: :create
 
@@ -8,14 +8,11 @@ class QuestionsController < ApplicationController
     @questions = Question.order(created_at: :desc).page(params[:page]).per(20)
   end
 
-  def new
-  end
-
   def create
-    @choice = Choice.find_by(text: params[:question][:choice_text])
-    @choice = @choice ? @choice : Choice.new(text: params[:question][:choice_text])
+    @choice = Choice.find_by(text: params[:choice_text])
+    @choice = @choice ? @choice : Choice.new(text: params[:choice_text])
     question = @choice.questions.build
-    question.image.attach(params[:question][:upload_file])
+    question.image.attach(params[:upload_file])
     if question.save
       redirect_to questions_path, flash: { success: '問題を作成しました' }
     else
@@ -50,7 +47,7 @@ class QuestionsController < ApplicationController
     end
 
     def require_choice_text
-      if params[:question][:choice_text].empty?
+      if params[:choice_text].empty?
         redirect_to new_question_path, flash: { danger: '正答選択肢を入力してください' }
       end
     end
