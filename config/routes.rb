@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   resources :matches, only: %i[create]
   get 'play/:match_id/:game_id', to: 'matches#play', as: :match_play
   patch 'play/:match_id/:game_id', to: 'matches#update', as: :match_update
+  post 'questions/label_detection', to: 'questions#label_detection'
 end

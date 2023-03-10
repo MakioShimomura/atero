@@ -5,36 +5,27 @@
     <%= link_to "問題一覧", questions_path, class: 'waves-effect waves-light btn' %>
   </div>
   <div class="col s12">
-    <%= form_with(url: questions_choice_predict_path) do |f| %>
+    <%= form_with(id: 'js-upload-form') do |f| %>
        <div class="file-field input-field">
         <div class="btn">
           <span>File</span>
-          <%= f.file_field(:upload_file, accept: "image/jpeg,image/gif,image/png") %>
+          <%= f.file_field(:upload_file, accept: "image/jpeg,image/gif,image/png", id: "js-upload-image") %>
         </div>
         <div class="file-path-wrapper">
           <input class="file-path validate" type="text">
         </div>
       </div>
-      <button class="btn">画像から予測</button>
     <% end %>
 
-    <% if @labels %>
-      <div class="admin-question-predict">
-        <% @labels.each do |label| %>
-          <button class="btn" onclick="document.getElementById('question_choice_text').value = event.target.innerText">
-            <%= label %>
-          </button>
-        <% end %>
+    <div class="admin-question-predict" id="js-label-detection"></div>
+    <%= form_with(url: questions_path, scope: :question) do |f| %>
+      <div>
+        <%= f.label :正解選択肢 %>
+        <%= f.text_field :choice_text %>
       </div>
-      <%= form_with(url: questions_path, scope: :question) do |f| %>
-        <div>
-          <%= f.label :正解選択肢 %>
-          <%= f.text_field :choice_text %>
-        </div>
-        <div>
-          <%= f.submit "作成", class: 'btn' %>
-        </div>
-      <% end %>
+      <div>
+        <%= f.submit "作成", class: 'btn' %>
+      </div>
     <% end %>
   </div>
 </div>

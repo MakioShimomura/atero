@@ -29,4 +29,36 @@ document.addEventListener("turbo:load", function() {
       document.match_form.submit()
     });
   }
+
+  const image_upload_form = document.getElementById('js-upload-form')
+  if (image_upload_form !== null) {
+    const image_upload_image = document.getElementById('js-upload-image')
+    const image_label_detection = document.getElementById('js-label-detection')
+
+    image_upload_image.addEventListener("change", () => {
+      // 非同期通信するデータの作成
+      const formData = new FormData();
+      formData.append("image", image_upload_image.files[0]);
+      const param = {
+        method: "POST",
+        body: formData
+      }
+
+      // 非同期通信
+      fetch('http://[::1]:3000/questions/label_detection', param)
+        .then(response => response.json())
+        .then(words => {
+          words.forEach(word => {
+            const element = document.createElement('button');
+            element.className = 'btn';
+            element.innerText = word;
+            element.onclick = (event) => {
+              document.getElementById('question_choice_text').value = event.target.innerText
+            };
+            image_label_detection.appendChild(element);
+          })
+        });
+    });
+
+  }
 })

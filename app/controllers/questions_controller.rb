@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  skip_forgery_protection only: :label_detection
   before_action :require_admin, only: [:new, :create, :index, :destroy]
   before_action :require_image, only: :choice_predict
   before_action :require_choice_text, only: :create
@@ -8,19 +9,11 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    if latest_tmp_image
-      @labels = ["爬虫類", "カメ", "陸生動物"]
-      # @labels = Vision.label_detection(latest_tmp_image)
-    end
   end
 
-  def choice_predict
-    upload_file = params[:upload_file]
-    if upload_file.present?
-      FileUtils.mkdir_p(TMP_PATH)
-      File.binwrite(TMP_PATH + upload_file.original_filename, File.read(upload_file))
-    end
-    redirect_to new_question_path
+  def label_detection
+    render :json => ["爬虫類", "カメ", "陸生動物"]
+    # render :json => Vision.label_detection(params[:image])
   end
 
   def create
