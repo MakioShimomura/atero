@@ -2,11 +2,12 @@
 <div class="row z-depth-1 start-card">
   <div class="admin-question-title-wrap mb-1">
     <p class="bold admin-title">問題作成</p>
-    <%= link_to "問題一覧", questions_path, class: 'waves-effect waves-light btn' %>
   </div>
   <div class="col s12">
-    <%= form_with(id: 'js-upload-form') do |f| %>
-       <div class="file-field input-field">
+
+    <%= form_with(url: questions_path, scope: :question) do |f| %>
+
+      <div class="file-field input-field">
         <div class="btn">
           <span>File</span>
           <%= f.file_field(:upload_file, accept: "image/jpeg,image/gif,image/png", id: "js-upload-image") %>
@@ -15,10 +16,8 @@
           <input class="file-path validate" type="text">
         </div>
       </div>
-    <% end %>
 
-    <div class="admin-question-predict" id="js-label-detection"></div>
-    <%= form_with(url: questions_path, scope: :question) do |f| %>
+      <div class="admin-question-predict" id="js-label-detection"></div>
       <div>
         <%= f.label :正解選択肢 %>
         <%= f.text_field :choice_text %>
@@ -26,6 +25,7 @@
       <div>
         <%= f.submit "作成", class: 'btn' %>
       </div>
+
     <% end %>
   </div>
 </div>

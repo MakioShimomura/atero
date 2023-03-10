@@ -30,24 +30,26 @@ document.addEventListener("turbo:load", function() {
     });
   }
 
-  const image_upload_form = document.getElementById('js-upload-form')
-  if (image_upload_form !== null) {
-    const image_upload_image = document.getElementById('js-upload-image')
+  const image_upload_image = document.getElementById('js-upload-image')
+  if (image_upload_image !== null) {
     const image_label_detection = document.getElementById('js-label-detection')
 
     image_upload_image.addEventListener("change", () => {
       // 非同期通信するデータの作成
       const formData = new FormData();
-      formData.append("image", image_upload_image.files[0]);
+      formData.append("upload_file", image_upload_image.files[0]);
       const param = {
         method: "POST",
         body: formData
       }
 
       // 非同期通信
-      fetch('http://[::1]:3000/questions/label_detection', param)
+      fetch('http://127.0.0.1:3000/questions/label_detection', param)
         .then(response => response.json())
         .then(words => {
+          while(image_label_detection.firstChild) {
+            image_label_detection.removeChild(image_label_detection.firstChild);
+          }
           words.forEach(word => {
             const element = document.createElement('button');
             element.className = 'btn';

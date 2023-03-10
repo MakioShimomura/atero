@@ -11,18 +11,12 @@ class QuestionsController < ApplicationController
   def new
   end
 
-  def label_detection
-    render :json => ["爬虫類", "カメ", "陸生動物"]
-    # render :json => Vision.label_detection(params[:image])
-  end
-
   def create
-    @choice = Choice.find_by(text: choice_params[:choice_text])
-    @choice = @choice ? @choice : Choice.new(text: choice_params[:choice_text])
+    @choice = Choice.find_by(text: params[:question][:choice_text])
+    @choice = @choice ? @choice : Choice.new(text: params[:question][:choice_text])
     question = @choice.questions.build
-    question.image.attach(io: File.open(latest_tmp_image), filename: File.basename(latest_tmp_image))
+    question.image.attach(params[:question][:upload_file])
     if question.save
-      FileUtils.rm_rf(Dir.glob("#{TMP_PATH}*"))
       redirect_to questions_path, flash: { success: '問題を作成しました' }
     else
       flash.now[:danger] = "問題の作成に失敗しました"
@@ -39,13 +33,11 @@ class QuestionsController < ApplicationController
     end
   end
 
-  private
-    def latest_tmp_image
-      FileUtils.mkdir_p(TMP_PATH)
-      files = Dir.glob("#{TMP_PATH}*")
-      files.sort_by { |f| File.ctime(f) }.last
-    end
+  def label_detection
+    render :json => Vision.label_detection(params[:upload_file])
+  end
 
+  private
     def require_admin
       redirect_to login_path if !logged_in?
     end
@@ -58,12 +50,8 @@ class QuestionsController < ApplicationController
     end
 
     def require_choice_text
-      if choice_params[:choice_text].empty?
+      if params[:question][:choice_text].empty?
         redirect_to new_question_path, flash: { danger: '正答選択肢を入力してください' }
       end
-    end
-
-    def choice_params
-      params.require(:question).permit(:choice_text)
     end
 end
