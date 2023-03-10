@@ -4,7 +4,7 @@ require 'net/https'
 
 module Vision
   class << self
-    def get_image_data(image_file)
+    def label_detection(image_file)
       # APIのURL作成
       api_url = "https://vision.googleapis.com/v1/images:annotate?key=#{ENV['GOOGLE_API_KEY']}"
 
@@ -33,8 +33,21 @@ module Vision
       request['Content-Type'] = 'application/json'
       response = https.request(request, params)
 
-      # APIレスポンス出力
-      JSON.parse(response.body)['responses'][0]['labelAnnotations'].pluck('description').take(3)
+      # レスポンスを英語から日本語に翻訳
+      translate(JSON.parse(response.body)['responses'][0]['labelAnnotations'].pluck('description').take(3))
+    end
+
+    def translate(words)
+      url = URI.parse('https://translation.googleapis.com/language/translate/v2')
+      params = {
+        q: words,
+        source: "en",
+        target: "ja",
+        key: ENV['GOOGLE_API_KEY']
+      }
+      url.query = URI.encode_www_form(params)
+      res = Net::HTTP.get_response(url)
+      JSON.parse(res.body)['data']['translations'].map { |word| word['translatedText'] }
     end
   end
 end

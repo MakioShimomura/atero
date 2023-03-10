@@ -9,7 +9,8 @@ class QuestionsController < ApplicationController
 
   def new
     if latest_tmp_image
-      @labels = Deepl.translation(Vision.get_image_data(latest_tmp_image))
+      @labels = ["爬虫類", "カメ", "陸生動物"]
+      # @labels = Vision.label_detection(latest_tmp_image)
     end
   end
 
