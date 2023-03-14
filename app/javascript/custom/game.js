@@ -35,7 +35,7 @@ document.addEventListener("turbo:load", function() {
       const formData = new FormData();
       formData.append("upload_file", uploadImage.files[0]);
 
-      fetch('http://127.0.0.1:3000/questions/label_detection', {
+      fetch('/questions/label_detection', {
           method: "POST",
           body: formData
       })
