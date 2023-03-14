@@ -1,67 +1,61 @@
 document.addEventListener("turbo:load", function() {
-  const judgment_correct = document.getElementById('js-judgment-correct')
-  if (judgment_correct !== null) {
-    const judgment_wrong = document.getElementById('js-judgment-wrong')
-    const choices_btn = document.getElementsByName('question[choice]')
-    const queation_image = document.getElementById('js-question-image')
-  
-    for (let btn of choices_btn) {
-    	btn.addEventListener(`change`, (e) => {
-  	    queation_image.classList.add('non-blur')
-    	  if (e.target.value === "true") {
-      	  judgment_correct.classList.add('active')
-    	  } else {
-    	    judgment_wrong.classList.add('active')
-    	  }
-    	  setTimeout(() => {
-    	    document.answer_form.submit()
-    	  }, 200)
-    	})
-    }
-  }
-  
-  const match_btn = document.getElementById('js-match-btn')
-  if (match_btn !== null) {
-    match_btn.addEventListener('click', () => {
-      const nickname_textfield = document.getElementById('game_name')
-      const match_nickname_textfield = document.getElementById('match_name')
-      match_nickname_textfield.value = nickname_textfield.value
+  // TOP画面 対戦モードボタン押下時の処理
+  const matchBtn = document.getElementById('js-match-btn')
+  if (matchBtn !== null) {
+    matchBtn.addEventListener('click', () => {
+      document.getElementById('match_name').value = document.getElementById('game_name').value
       document.match_form.submit()
     });
   }
 
-  const image_upload_image = document.getElementById('js-upload-image')
-  if (image_upload_image !== null) {
-    const image_label_detection = document.getElementById('js-label-detection')
+  // 正答画面の正誤判定処理
+  const judgmentCorrect = document.getElementById('js-judgment-correct')
+  if (judgmentCorrect !== null) {
+    const judgmentWrong = document.getElementById('js-judgment-wrong')
+    const choicesBtn = document.getElementsByName('question[choice]')
+  
+    for (let btn of choicesBtn) {
+    	btn.addEventListener(`change`, (e) => {
+  	    document.getElementById('js-question-image').classList.add('non-blur')
+        e.target.value === "true" ? judgmentCorrect.classList.add('active') : judgmentWrong.classList.add('active');
+    	  setTimeout(() => { document.answer_form.submit() }, 200)
+    	})
+    }
+  }
 
-    image_upload_image.addEventListener("change", () => {
-      // 非同期通信するデータの作成
+  // 問題作成 画像予測処理
+  const uploadImage = document.getElementById('js-upload-image')
+  if (uploadImage !== null) {
+    const labels = document.getElementById('js-label-detection')
+    const choiceText = document.getElementById('js-question-choice')
+
+    uploadImage.addEventListener("change", () => {
+      choiceText.classList.add('hide')
+      while(labels.firstChild) { labels.removeChild(labels.firstChild) }
       const formData = new FormData();
-      formData.append("upload_file", image_upload_image.files[0]);
-      const param = {
-        method: "POST",
-        body: formData
-      }
+      formData.append("upload_file", uploadImage.files[0]);
 
-      // 非同期通信
-      fetch('http://127.0.0.1:3000/questions/label_detection', param)
+      fetch('http://127.0.0.1:3000/questions/label_detection', {
+          method: "POST",
+          body: formData
+      })
         .then(response => response.json())
         .then(words => {
-          while(image_label_detection.firstChild) {
-            image_label_detection.removeChild(image_label_detection.firstChild);
-          }
-          words.forEach(word => {
-            const element = document.createElement('button');
-            element.className = 'btn';
-            element.setAttribute('type', 'button');
-            element.innerText = word;
-            element.onclick = (event) => {
-              document.getElementById('js-choice-text').value = event.target.innerText
-            };
-            image_label_detection.appendChild(element);
-          })
+          words.forEach(word => { generateLabel(word) })
+          choiceText.classList.remove('hide')
         });
     });
 
+    // 検出したラベルのボタンを生成
+    const generateLabel = (text) => {
+      const label = document.createElement('button');
+      label.className = 'btn';
+      label.setAttribute('type', 'button');
+      label.innerText = text;
+      label.onclick = (event) => {
+        document.getElementById('js-choice-text').value = event.target.innerText
+      };
+      labels.appendChild(label);
+    }
   }
 })

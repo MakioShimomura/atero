@@ -16,13 +16,15 @@
         </div>
       </div>
 
-      <div class="admin-question-predict" id="js-label-detection"></div>
-      <div>
-        <%= f.label :正解選択肢 %>
-        <%= f.text_field :choice_text, id: 'js-choice-text' %>
-      </div>
-      <div>
-        <%= f.submit "作成", class: 'btn' %>
+      <div id="js-question-choice" class="hide">
+        <div class="admin-question-predict" id="js-label-detection"></div>
+        <div>
+          <%= f.label :正解選択肢 %>
+          <%= f.text_field :choice_text, id: 'js-choice-text' %>
+        </div>
+        <div>
+          <%= f.submit "作成", class: 'btn' %>
+        </div>
       </div>
 
     <% end %>
