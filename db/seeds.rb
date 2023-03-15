@@ -1,6 +1,6 @@
-Admin.create!(email: "sonic_garden@camp.jp",
-              password:               "foobar",
-              password_confirmation: "foobar")
+Admin.create!(email: "example@test.com",
+              password:               "password",
+              password_confirmation: "password")
               
 # 回答済みのユーザー
 base_at = Time.zone.now + 30.second
