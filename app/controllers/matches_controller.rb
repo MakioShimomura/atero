@@ -17,11 +17,7 @@ class MatchesController < ApplicationController
   
   def play
     @question = Question.order("RANDOM()").first
-    correct_choice = Choice.find(@question.choice_id)
-    wrong_choices = Choice.order("RANDOM()").limit(3)
-    @choices = wrong_choices.map { |choice| {text: choice.text, is_correct: false} }
-    @choices << { text: correct_choice.text, is_correct: true}
-    @choices.shuffle!
+    @choices = @question.createFourChoices
   end
   
   def update
