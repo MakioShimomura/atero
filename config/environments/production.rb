@@ -42,8 +42,8 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
-  config.action_cable.url = "wss://quiz-app-pi8x.onrender.com/cable"
-  config.action_cable.allowed_request_origins = [ 'https://quiz-app-pi8x.onrender.com', /https:\/\/quiz-app-pi8x.onrender.*/ ]
+  config.action_cable.url = "wss://atero.onrender.com/cable"
+  config.action_cable.allowed_request_origins = [ 'https://atero.onrender.com', /https:\/\/atero.onrender.*/ ]
   ActionCable.server.config.disable_request_forgery_protection = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
