@@ -1,16 +1,18 @@
 class QuestionsController < ApplicationController
   skip_forgery_protection only: :label_detection
   before_action :require_admin, only: [:create, :index, :destroy]
-  before_action :require_image, only: :choice_predict
   before_action :require_choice_text, only: :create
 
   def index
     @questions = Question.order(created_at: :desc).page(params[:page]).per(20)
   end
 
+  def label_detection
+    render :json => Vision.label_detection(params[:upload_file])
+  end
+
   def create
-    @choice = Choice.find_by(text: params[:choice_text])
-    @choice = @choice ? @choice : Choice.new(text: params[:choice_text])
+    @choice = Choice.find_or_create_by(text: params[:choice_text])
     question = @choice.questions.build
     question.image.attach(params[:upload_file])
     if question.save
@@ -30,25 +32,14 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def label_detection
-    render :json => Vision.label_detection(params[:upload_file])
-  end
-
   private
     def require_admin
       redirect_to login_path if !logged_in?
     end
 
-    def require_image
-      if params[:upload_file].nil?
-        flash.now[:danger] = "画像をアップロードしてください"
-        return render 'new', status: :see_other
-      end
-    end
-
     def require_choice_text
       if params[:choice_text].empty?
-        redirect_to new_question_path, flash: { danger: '正答選択肢を入力してください' }
+        redirect_to questions_path, flash: { danger: '正答選択肢を入力してください' }
       end
     end
 end

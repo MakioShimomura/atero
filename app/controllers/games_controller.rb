@@ -1,13 +1,13 @@
 class GamesController < ApplicationController
   before_action :check_game_id_in_session, only: :edit
 
-  def show
-    @game = Game.find(params[:id]).decorate
-  end
-
   def index
     @game = Game.new(name: cookies[:nickname] || '名無し')
     @games = Game.rank_sorted.decorate.limit(20)
+  end
+
+  def show
+    @game = Game.find(params[:id]).decorate
   end
 
   def create
