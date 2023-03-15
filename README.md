@@ -1,4 +1,4 @@
-# SGキャンプ第3回 ザッハトルテ 後半アプリ開発
+# SGキャンプ第3回 後半アプリ開発
 
 ## 画像クイズアプリ
 加工された画像をクイズ形式で出題するアプリです。
@@ -29,7 +29,7 @@ $ brew install imagemagick
 # gemのインストール
 $ bundle install
 
-# database.ymlを読み込み，そのファイルに基づいてデータベースを作成
+# database.ymlを読み込み，database.ymlに基づいてデータベースを作成
 $ rails db:create
 
 # マイグレート
@@ -37,9 +37,12 @@ $ rails db:migrate
 
 # シードの実行
 $ rails db:seed
+
+# Pumaの起動
+$ rails server
 ```
 
-## 環境構築(linux)
+## 環境構築(linux) cloud9での実装時
 
 ```sh
 # リポジトリからプロジェクトをクローン
