@@ -16,8 +16,8 @@
             <span class="bold"><%= question.choice.text %></span>
           </div>
           <%= link_to "削除", question, data: { "turbo-method": :delete,
-                                                turbo_confirm: "本当に削除しますか？", },
-                                        class: 'waves-effect waves-light btn' %>
+                                                turbo_confirm: "本当に削除しますか？" },
+                                       class: 'waves-effect waves-light btn' %>
         </li>
       <% end %>
     </ul>

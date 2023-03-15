@@ -5,7 +5,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id]).decorate
   end
 
-  def new
+  def index
     @game = Game.new(name: cookies[:nickname] || '名無し')
     @games = Game.rank_sorted.decorate.limit(20)
   end
