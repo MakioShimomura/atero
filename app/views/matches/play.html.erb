@@ -1,17 +1,17 @@
-<div id="data" data-match-id="<%= @match.id %>" data-game-id="<%= @game.id %>"></div>
+<div id="js-match-data" data-match-id="<%= @match.id %>" data-game-id="<%= @game.id %>"></div>
 
-<div id="js-play-screen-1" class="<%= @match.status == 0 ? '' : 'hide' %>">
-  <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
+<div class="row">
+  <%# マッチング画面 %>
+  <div class="<%= @match.status == 0 ? '' : 'hide' %> result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
     <p class="bold">対戦マッチング中...</p>
     <div class="progress">
       <div class="indeterminate"></div>
     </div>
   </div>
-</div>
-  
-<% if @match.status == 1 %>
-  <div id="js-play-screen-2" class="row <%= @game.end_at.nil? ? '' : 'hide' %>">
-    <div class="col s12 m8 l6 offset-m2 offset-l3 question-container">
+
+  <% if @match.status == 1 %>
+    <%# 回答画面 %>
+    <div class="<%= @game.end_at ? 'hide' : '' %> col s12 m8 l6 offset-m2 offset-l3 question-container">
       <%= render 'games/quiz_image' %> 
       <%= render 'games/progress', game: @game %> 
       <div id="js-opponent-progress">
@@ -19,25 +19,23 @@
       </div>
       <%= render 'games/answer_form' %>
     </div>
-  </div>
 
-  <div id="js-play-screen-3" class="<%= @game.end_at ? '' : 'hide' %>">
-    <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
+    <%# 対戦相手の回答待ち画面 %>
+    <div class="<%= @game.end_at ? '' : 'hide' %> result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
       <p class="bold">対戦相手の回答待ち...</p>
       <div class="progress">
         <div class="indeterminate"></div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-<% if @match.status == 2 %>
-  <div class="row">
+  <% if @match.status == 2 %>
+    <%# 結果画面 %>
     <div class="result-card col s12 m8 l6 offset-m2 offset-l3 z-depth-1 center-align">
       <%= @match.victory_judgment(@game) %>
       <%= render 'games/result', game: @game %> 
       <%= render 'games/result', game: @opponent_game %> 
       <%= link_to "Top画面へ戻る", root_path, class: "waves-effect waves-light btn-large" %>
     </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
