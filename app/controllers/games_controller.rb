@@ -49,8 +49,6 @@ class GamesController < ApplicationController
   private
 
     def check_game_id_in_session
-      if session[:game_id].nil? && session[:game_id] != params[:id].to_i
-        redirect_to root_path
-      end
+      redirect_to root_path if session[:game_id].nil? || session[:game_id] != params[:id].to_i
     end
 end

@@ -1,13 +1,12 @@
 class MatchesController < ApplicationController
-  before_action :setting_match, only: [:play, :update]
+  before_action :set_match_info, only: [:play, :update]
 
   def create
-    match = Match.where(status: 0).last
-    if match.nil?
-      match = Match.create()
-    else
+    if match = Match.where(status: 0).first
       match.update(status: 1)
       match.games.first.update(start_at: Time.zone.now)
+    else
+      match = Match.create()
     end
     game = match.games.create(name: params[:match][:name],
                               start_at: Time.zone.now,
@@ -36,7 +35,7 @@ class MatchesController < ApplicationController
 
   private
   
-    def setting_match
+    def set_match_info
       @match = Match.find(params[:match_id]).decorate
       @game = @match.games.find(params[:game_id]).decorate
       @opponent_game = @match.games.where.not(id: params[:game_id]).first

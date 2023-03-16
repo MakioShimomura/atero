@@ -38,8 +38,6 @@ class QuestionsController < ApplicationController
     end
 
     def require_choice_text
-      if params[:choice_text].empty?
-        redirect_to questions_path, flash: { danger: '正答選択肢を入力してください' }
-      end
+      redirect_to questions_path, flash: { danger: '正答選択肢を入力してください' } if params[:choice_text].empty?
     end
 end
