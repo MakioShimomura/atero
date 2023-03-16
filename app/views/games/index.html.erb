@@ -12,23 +12,20 @@
     </div>
   </div>
 <% end %>
+
 <div class="row z-depth-1 start-card">
   <p class="bold start-title">ゲームを始める</p>
   <%= form_with(model: @game, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
     <div class="mb-0">
       <%= f.label 'ニックネーム' %>
-      <% if @game.name %>
-        <%= f.text_field :name, placeholder: @game.name %>
-      <% else %>
-        <%= f.text_field :name %>
-      <% end %>
+      <%= f.text_field :name, placeholder: @game.name %>
     </div>
     <div class="center-align mb-1">
       <button type='submit' class="waves-effect waves-light btn-large full">1人用モード</button>
     </div>
   <% end %>
   <div class="col s12 m6 l4 offset-m3 offset-l4">
-    <%= form_with(url: matches_path, method: :post, scope: :match, html: {name: "match_form"}) do |f| %>
+    <%= form_with(url: matches_path, scope: :match, html: {name: "match_form"}) do |f| %>
       <%= f.hidden_field :name, value: @game.name %>
     <% end %>
     <div class="center-align">
