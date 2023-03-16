@@ -6,7 +6,8 @@ class MatchesController < ApplicationController
     if match.nil?
       match = Match.create()
     else
-      match.update(status: 1, start_at: Time.zone.now)
+      match.update(status: 1)
+      match.games.first.update(start_at: Time.zone.now)
     end
     game = match.games.create(name: params[:match][:name],
                               start_at: Time.zone.now,

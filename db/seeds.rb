@@ -10,7 +10,7 @@ names.each.with_index(1) do |name, i|
                question_quantities: 4,
                correct_quantities: 2,
                start_at: base_at,
-               end_at: base_at + i.second)
+               end_at: base_at + (i + 10).second)
 end
 # 同率のユーザー
 2.times do
@@ -18,14 +18,14 @@ end
              question_quantities: 4,
              correct_quantities: 2,
              start_at: base_at,
-             end_at: base_at + 10.second)
+             end_at: base_at + 20.second)
 end
 # 最下位のユーザー
 Game.create!(name: "最下位くん",
              question_quantities: 4,
              correct_quantities: 0,
              start_at: base_at,
-             end_at: base_at + 10.second)
+             end_at: base_at + 20.second)
 
 # 正答からchoice(選択肢)を作成
 correct_choices_texts = [

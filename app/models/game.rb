@@ -9,12 +9,12 @@ class Game < ApplicationRecord
             trunc(extract(
                 second
                 FROM
-                  end_at - created_at
+                  end_at - start_at
               )) AS answer_time,
             RANK() OVER(ORDER BY correct_quantities * 100 / question_quantities DESC, trunc(extract(
                     second
                     FROM
-                      end_at - created_at
+                      end_at - start_at
                   )) ASC) AS rank")
           .where.not(end_at: nil)
   }
