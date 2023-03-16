@@ -6,16 +6,10 @@ class Game < ApplicationRecord
   scope :rank_sorted, -> {
     select("*,
             correct_quantities * 100 / question_quantities AS correct_rate,
-            trunc(extract(
-                second
-                FROM
-                  end_at - start_at
-              )) AS answer_time,
-            RANK() OVER(ORDER BY correct_quantities * 100 / question_quantities DESC, trunc(extract(
-                    second
-                    FROM
-                      end_at - start_at
-                  )) ASC) AS rank")
+            date_trunc('second', end_at - start_at) AS answer_time,
+            RANK() OVER(
+                ORDER BY correct_quantities * 100 / question_quantities DESC,
+                date_trunc('second', end_at - start_at) ASC) AS rank")
           .where.not(end_at: nil)
   }
 end
