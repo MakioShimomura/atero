@@ -15,24 +15,19 @@
 
 <div class="row z-depth-1 start-card">
   <p class="bold start-title">ゲームを始める</p>
-  <%= form_with(model: @game, class: "col s12 m6 l4 offset-m3 offset-l4") do |f| %>
-    <div class="mb-0">
-      <%= f.label 'ニックネーム' %>
-      <%= f.text_field :name, placeholder: @game.name %>
-    </div>
-    <div class="center-align mb-1">
-      <button type='submit' class="waves-effect waves-light btn-large full">1人用モード</button>
-    </div>
-  <% end %>
   <div class="col s12 m6 l4 offset-m3 offset-l4">
+    <%= form_with(model: @game) do |f| %>
+      <%= f.label 'ニックネーム' %>
+      <%= f.text_field :name, placeholder: @game.name, class: "mb-1" %>
+      <button type='submit' class="waves-effect waves-light btn-large full mb-1">1人用モード</button>
+    <% end %>
     <%= form_with(url: matches_path, scope: :match, html: {name: "match_form"}) do |f| %>
       <%= f.hidden_field :name, value: @game.name %>
     <% end %>
-    <div class="center-align">
-      <button id='js-match-btn' class="waves-effect waves-light btn-large full">対戦モード</button>
-    </div>
+    <button id='js-match-btn' class="waves-effect waves-light btn-large full">対戦モード</button>
   </div>
 </div>
+
 <div class="z-depth-1 rank-card">
   <p class="bold rank-title">ランキング</p>
   <table class="striped">
