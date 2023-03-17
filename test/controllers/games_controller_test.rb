@@ -9,11 +9,11 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   test "ホームページへアクセス" do
     get root_path
     assert_response :success
-    assert_template 'games/new'
+    assert_template 'games/index'
   end
 
-  test "ゲームユーザーの名前は20文字以内" do
-    @game.name = "a"* 21
+  test "ゲームユーザーの名前は12文字以内" do
+    @game.name = "a"* 13
     assert_not @game.valid?
   end
 end
