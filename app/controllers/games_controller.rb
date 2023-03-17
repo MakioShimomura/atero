@@ -19,9 +19,9 @@ class GamesController < ApplicationController
       session[:game_id] = @game.id
       redirect_to edit_game_path(@game.id)
     else
-      @games = Game.rank_sorted.limit(20)
+      @games = Game.rank_sorted.decorate.limit(20)
       flash.now[:danger] = '名前が保存できませんでした（12文字以内）'
-      render 'new', status: :unprocessable_entity
+      render 'index', status: :unprocessable_entity
     end
   end
 
